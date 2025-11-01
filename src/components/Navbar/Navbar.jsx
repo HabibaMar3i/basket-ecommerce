@@ -1,6 +1,7 @@
 import TopBar from "../TopBar/TopBar";
 import Header from "../Header/Header";
 import { Link } from "react-router-dom";
+import Breadcrumbs from './../Breadcrumbs/Breadcrumbs';
 
 export default function NavbarComponent() {
   return (
@@ -49,6 +50,9 @@ export default function NavbarComponent() {
           </ul>
         </div>
       </nav>
-    </>
+
+      <Breadcrumbs />
+      
+      </>
   );
 }
