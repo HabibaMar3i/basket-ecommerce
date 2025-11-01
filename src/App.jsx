@@ -1,6 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './App.css'
-import AuthLayout from './layouts/AuthLayout/AuthLayout'
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import MainLayout from './layouts/MainLayout/MainLayout';
@@ -16,14 +15,10 @@ function App() {
 
   const routes = createBrowserRouter([
     {
-      path: '', element: <AuthLayout />, children: [
-        { path: 'register', element: <Register /> },
-        { path: 'login', element: <Login /> }
-      ]
-    },
-    {
       path: '', element: <MainLayout />, children: [
         { index: true, element: <HomePage /> },
+        { path: 'register', element: <Register /> },
+        { path: 'login', element: <Login /> },
         { path: 'about-us', element: <AboutUs /> },
         { path: 'blog', element: <Blog /> },
         { path: 'cart', element: <Cart /> },
