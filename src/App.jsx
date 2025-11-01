@@ -8,7 +8,7 @@ import HomePage from './pages/HomePage/HomePage';
 import Blog from './pages/Blog/Blog';
 import AboutUs from './pages/AboutUs/AboutUs';
 import Cart from './pages/Cart/Cart';
-import ContactUs from './pages/Contactus/Contactus';
+import ContactUs from './pages/ContactUs/ContactUs';
 import Shop from './pages/Shop/Shop';
 import NotFound from './pages/NotFound/NotFound';
 
