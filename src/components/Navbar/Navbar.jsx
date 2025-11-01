@@ -1,7 +1,7 @@
-export default function Navbar() {
-    return (
-        <div>
-            <h1>Navbar component</h1>
-        </div>
-    )
+export default function NavbarComponent() {
+  return (
+    <div>
+      <h1>Navbar Component</h1>
+    </div>
+  )
 }
