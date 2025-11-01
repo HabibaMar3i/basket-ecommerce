@@ -1,7 +1,8 @@
+import TopBar from './../TopBar/TopBar';
 export default function NavbarComponent() {
   return (
-    <div>
-      <h1>Navbar Component</h1>
-    </div>
+    <>
+      <TopBar/>
+    </>
   )
 }
