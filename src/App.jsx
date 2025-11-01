@@ -9,6 +9,7 @@ import AboutUs from './pages/AboutUs/AboutUs';
 import Cart from './pages/Cart/Cart';
 import ContactUs from './pages/ContactUs/ContactUs';
 import Shop from './pages/Shop/Shop';
+import Profile from './pages/Profile/Profile';
 import NotFound from './pages/NotFound/NotFound';
 
 function App() {
@@ -23,7 +24,8 @@ function App() {
         { path: 'blog', element: <Blog /> },
         { path: 'cart', element: <Cart /> },
         { path: 'contact-us', element: <ContactUs /> },
-        { path: 'shop', element: <Shop /> }
+        { path: 'shop', element: <Shop /> },
+        { path: 'profile', element: <Profile /> }
       ]
     },
     { path: '*', element: <NotFound /> }

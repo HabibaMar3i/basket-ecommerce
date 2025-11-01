@@ -1,4 +1,5 @@
 import { Input } from "@heroui/react";
+import { Link } from "react-router-dom";
 import logo from "./../../assets/logo.svg";
 
 export default function Header() {
@@ -6,11 +7,13 @@ export default function Header() {
         <>
             <header className="bg-white w-full">
                 <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-6 px-4 py-3">
-                    <img
-                        src={logo}
-                        alt="Basket logo"
-                        className="h-10 sm:h-12 cursor-pointer"
-                    />
+                    <Link to="/">
+                        <img
+                            src={logo}
+                            alt="Basket logo"
+                            className="h-10 sm:h-12 cursor-pointer hover:opacity-80 transition-opacity"
+                        />
+                    </Link>
 
                     <div className="w-full sm:w-[500px]">
                         <Input
@@ -25,15 +28,14 @@ export default function Header() {
                     </div>
 
                     <div className="flex items-center gap-4 sm:gap-6">
-                        {/* User */}
-                        <button className="border border-gray-300 rounded-full p-2 hover:border-[#35AFA0] transition">
-                            <i className="fa-regular fa-user text-[#3E445A]"></i>
-                        </button>
+                        <Link to="/profile" className="border border-gray-300 rounded-full p-2 hover:border-[#35AFA0] hover:bg-[#35AFA0] group transition-all">
+                            <i className="fa-regular fa-user text-[#3E445A] group-hover:text-white transition-colors"></i>
+                        </Link>
 
-                        <div className="flex items-center gap-2">
+                        <Link to="/cart" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
                             <span className="font-semibold text-[#3E445A] text-sm sm:text-base">$0.00</span>
-                            <i className="fa-solid fa-cart-shopping text-[#35AFA0] text-lg"></i>
-                        </div>
+                            <i className="fa-solid fa-cart-shopping text-[#35AFA0] text-lg hover:scale-110 transition-transform"></i>
+                        </Link>
                     </div>
                 </div>
             </header>
