@@ -6,16 +6,16 @@ export default function Header() {
     return (
         <>
             <header className="bg-white w-full">
-                <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-6 px-4 py-3">
+                <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-6 md:gap-8 px-4 md:px-6 py-3">
                     <Link to="/">
                         <img
                             src={logo}
                             alt="Basket logo"
-                            className="h-10 sm:h-12 cursor-pointer hover:opacity-80 transition-opacity"
+                            className="h-10 sm:h-12 md:h-14 cursor-pointer hover:opacity-80 transition-opacity"
                         />
                     </Link>
 
-                    <div className="w-full sm:w-[500px]">
+                    <div className="w-full sm:w-[500px] md:w-[600px]">
                         <Input
                             type="text"
                             placeholder="Search for Products, fruit, meat, eggs .etc..."
@@ -27,7 +27,7 @@ export default function Header() {
                         />
                     </div>
 
-                    <div className="flex items-center gap-4 sm:gap-6">
+                    <div className="flex items-center gap-4 sm:gap-6 md:gap-8">
                         <Link to="/profile" className="border border-gray-300 rounded-full p-2 hover:border-[#35AFA0] hover:bg-[#35AFA0] group transition-all">
                             <i className="fa-regular fa-user text-[#3E445A] group-hover:text-white transition-colors"></i>
                         </Link>
