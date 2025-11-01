@@ -5,7 +5,7 @@ function App() {
   return (
     <>
       <h1 class="text-3xl font-bold underline">
-        Hello world!
+        <i class="fa-solid fa-house"></i> Test Tailwind and font awesome
       </h1>
     </>
   )
