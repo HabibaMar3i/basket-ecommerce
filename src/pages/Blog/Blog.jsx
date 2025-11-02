@@ -15,10 +15,10 @@ export default function Blog() {
 
     return (
         <section>
-            <div className="container 2xl:max-w-7xl m-auto px-2">
+            <div className="container lg:max-w-[1200px] m-auto px-8">
                 <div className="flex justify-between flex-col lg:flex-row lg:m-auto">
                     {/*  articals section */}
-                    <div className="articals lg:w-[65%]">
+                    <div className="articals lg:w-[70%]">
                         <article className='mb-14'>
                             <img src="https://placehold.co/600x400" alt="" className='xl:w-[855px] xl:h-[598.5px] w-full h-auto   rounded-md object-cover' />
                             <div className="category mt-5">Grocery</div>
@@ -49,7 +49,7 @@ export default function Blog() {
                         </div>
                     </div>
                     {/* aside section */}
-                    <aside className='lg:w-[25%]'>
+                    <aside className='lg:w-[23%]'>
                         <div className="posts-parent max-lg:mt-5">
                             <h3 className="uppercase mb-4 ">recent posts</h3>
                             <div className="Recent-Posts rounded-lg border border-[#EDEEF5]  p-4">
