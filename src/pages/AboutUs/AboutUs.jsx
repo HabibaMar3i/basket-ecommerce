@@ -10,7 +10,7 @@ export default function AboutUs() {
 
             </main>
             <div className="about">
-                <div className="container lg:max-w-[1200px] m-auto">
+                <div className="container lg:max-w-[1200px] m-auto px-4">
                     <p className="font-normal text-sm  align-middle">In nec purus eget neque accumsan finibus. Duis condimentum elit ut libero commodo iaculis. Donec augue diam, tristique et ultricies nec, consectetur quis enim. Nullam id
                         rutrum ex. Aliquam a lectus id lacus rhoncus dapibus non ac justo. Vivamus lacinia vestibulum metus in dapibus. Vestibulum sit amet sollicitudin enim. Ut id interdum turpis.
                         Curabitur porta auctor quam, pretium facilisis nisl. Pellentesque efficitur elit ante, vel vulputate tortor blandit nec.</p>
@@ -21,16 +21,16 @@ export default function AboutUs() {
                             Nullam id rutrum ex. Aliquam a lectus id lacus rhoncus dapibus non ac justo. Vivamus lacinia vestibulum metus in dapibus. Vestibulum sit amet sollicitudin enim. Ut id
                             interdum turpis. Curabitur porta auctor quam, pretium facilisis nisl. Pellentesque efficitur elit ante, vel vulputate tortor blandit nec.</p>
                     </div>
-                    <div className="flex max-xl:flex-col xl:gap-20   gap-0 relative">
+                    <div className="flex max-lg:flex-col lg:gap-20   gap-0 relative">
                         <img src={image} alt="" className="w-full sm:w-1/2 h-auto m-auto" />
-                        <div className="flex flex-col gap-2  ">
-                            <div className="job-title mt-20 mb-10">Rachel Leonard - Bacola CEO</div>
+                        <div className="flex flex-col gap-2 text-sm   ">
+                            <div className="job-title mt-20 mb-10 text-base">Rachel Leonard - Bacola CEO</div>
                             <h2 className="font-semibold text-3xl xl:-ml-12 mb-10">Duis convallis luctus pretium Pellentesque habitant morbi</h2>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                                 tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse
                                 ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel
                                 facilisis.</p>
-                            <p>In fermentum mi ut sapien semper, a sagittis lorem vulputate. Integer gravida,
+                            <p className="leading-6">In fermentum mi ut sapien semper, a sagittis lorem vulputate. Integer gravida,
                                 dui eget aliquet tempus, turpis orci vehicula ipsum, eget porttitor sapien tortor
                                 at neque. Cras id pulvinar lacus, ac volutpat neque. Ut at magna id justo
                                 bibendum lobortis. Integer tortor nulla, ultricies et nisi sit amet, interdum
@@ -43,7 +43,7 @@ export default function AboutUs() {
                                 Curabitur fermentum dolor eu lacus consectetur varius.</p>
 
                         </div>
-                        <p className="xl:absolute -bottom-16 pl-[100px] py-[60px] bg-white left-26 rounded-md">In nec purus eget neque accumsan finibus. Duis condimentum elit ut libero commodo iaculis. Donec augue diam, tristique et ultricies nec,
+                        <p className="lg:absolute text-sm  -bottom-16 pl-[100px] py-[60px] bg-white left-26 rounded-md">In nec purus eget neque accumsan finibus. Duis condimentum elit ut libero commodo iaculis. Donec augue diam, tristique et ultricies nec,
                             consectetur quis enim. Nullam id rutrum ex. Aliquam a lectus id lacus rhoncus dapibus non ac justo. Vivamus lacinia vestibulum metus in
                             dapibus. Vestibulum sit amet sollicitudin enim. Ut id interdum turpis. Curabitur porta auctor quam, pretium facilisis nisl. Pellentesque efficitur elit
                             ante, vel vulputate tortor blandit nec.</p>
