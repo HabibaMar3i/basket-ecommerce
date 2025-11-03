@@ -1,82 +1,24 @@
 import {
   Button,
-  Checkbox,
-  CheckboxGroup,
-  NumberInput,
   Select,
   SelectItem,
+  Drawer,
+  DrawerContent,
+  DrawerBody,
+  useDisclosure,
+  Pagination,
 } from "@heroui/react";
 import { useState } from "react";
+import FilterCategories from "./FilterCategories";
 
 export default function Shop() {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
   const [sort, setSort] = useState("a-z");
   const handelSort = (value) => {
     setSort(value);
   };
-  const categories = {
-    productCategories: [
-      {
-        name: "Beverages",
-      },
-      {
-        name: "Breads & Bakery",
-      },
-      {
-        name: "Breakfast & Dairy",
-      },
-      {
-        name: "Frozen Foods",
-      },
-      {
-        name: "Fruits & Vegetables",
-      },
-      {
-        name: "Grocery & Staples",
-      },
-      {
-        name: "Household Needs",
-      },
-      {
-        name: "Meats & Seafood",
-      },
-    ],
-    brands: [
-      {
-        name: "Frito Lay",
-        count: 8,
-      },
-      {
-        name: "Quaker",
-        count: 36,
-      },
-      {
-        name: "Cola",
-        count: 1,
-      },
-      {
-        name: "Welch's",
-        count: 1,
-      },
-      {
-        name: "Oreo",
-        count: 16,
-      },
-    ],
-    itemInStock: {
-      inStock: 62,
-      outOfStock: 0,
-    },
-    sortBy: {
-      options: [
-        "Price: Low to High",
-        "Price: High to Low",
-        "Name: A to Z",
-        "Name: Z to A",
-        "Best Selling",
-        "Newest",
-      ],
-    },
-  };
+
   const products = [
     {
       name: "100% Butter French Croissants",
@@ -162,105 +104,27 @@ export default function Shop() {
   return (
     <div>
       <div className="container mx-auto">
-        <div className=" grid grid-cols-12 gap-4">
-          <div className="navShop hidden sm:block sm:col-span-12 md:col-span-4 lg:col-span-3  p-2">
-            {/* 
-            Product Categories
-            */}
-            <h2 className=" text-base uppercase font-semibold mt-6 mb-6">
-              Product Categories
-            </h2>
-            <div className="productCategories">
-              <CheckboxGroup size="sm">
-                {categories.productCategories.map((categoriy, i) => {
-                  return (
-                    <Checkbox key={i} value={categoriy.name}>
-                      {" "}
-                      <span className="text-[#71778E]"> {categoriy.name} </span>
-                    </Checkbox>
-                  );
-                })}
-              </CheckboxGroup>
-            </div>
-            {/* 
-            Brands
-            */}
-            <h2 className=" text-base uppercase font-semibold mt-6 mb-6">
-              Brands
-            </h2>
-            <div className="brands">
-              <CheckboxGroup size="sm" className="w-full">
-                {categories.brands.map((brand, i) => {
-                  return (
-                    <Checkbox key={i} value={brand.name} className="w-full">
-                      <div className="flex justify-between w-full">
-                        <span className="text-[#71778E]"> {brand.name} </span>
-                        <span className="text-[#71778E] ">
-                          {" "}
-                          ( {brand.count} ){" "}
-                        </span>
-                      </div>
-                    </Checkbox>
-                  );
-                })}
-              </CheckboxGroup>
-            </div>
-            {/* 
-            Price
-            */}
-            <h2 className=" text-base uppercase font-semibold mt-6 mb-6">
-              Price
-            </h2>
-            <div className="price">
-              <div className="flex items-center gap-4">
-                <NumberInput
-                  size="sm"
-                  className="max-w-xs"
-                  placeholder="0.00"
-                  label="Form"
-                  labelPlacement="outside"
-                />
-                <span className="mt-4">-</span>
-                <NumberInput
-                  size="sm"
-                  className="max-w-xs"
-                  placeholder="0.00"
-                  label="to"
-                  labelPlacement="outside"
-                />
-              </div>
-            </div>
-            {/* 
-            Availability
-            */}
-            <h2 className=" text-base uppercase font-semibold mt-6 mb-6">
-              Availability
-            </h2>
-            <div className="productCategories">
-              <CheckboxGroup size="sm">
-                <Checkbox value={"inStock"}>
-                  <span className="text-[#71778E]">
-                    {" "}
-                    <span> In stock </span>
-                    <span> ( {categories.itemInStock.inStock} ) </span>
-                  </span>
-                </Checkbox>
-                <Checkbox value={"outOfStock"}>
-                  <span className="text-[#71778E]">
-                    <span> Out of stock </span>
-                    <span> ( {categories.itemInStock.outOfStock} ) </span>
-                  </span>
-                </Checkbox>
-              </CheckboxGroup>
-            </div>
-            <div className="bannarFilter mt-5">
-              <img
-                src="/src/assets/Widget-Banner.png"
-                alt=""
-                className="w-[270px] h-[400px] "
-              />
-            </div>
+        <div className=" grid grid-cols-12 gap-4 relative">
+          <div className=" max-[770px]:block hidden right-0 top-[-10px] absolute">
+            <Button onPress={onOpen}>
+              <i class="fa-solid fa-filter text-[#35AFA0]"></i>
+            </Button>
+            <Drawer isOpen={isOpen} onOpenChange={onOpenChange}>
+              <DrawerContent>
+                {() => (
+                  <>
+                    <DrawerBody>
+                      <FilterCategories />
+                    </DrawerBody>
+                  </>
+                )}
+              </DrawerContent>
+            </Drawer>
           </div>
+          <div className="sm:col-span-12 md:col-span-4 lg:col-span-3 max-[770px]:hidden  p-2">
+            <FilterCategories />
+          </div>
+
           <div className="col-span-12 md:col-span-8 lg:col-span-9  p-2">
             {/* 
                       Banner Shop
@@ -464,6 +328,17 @@ export default function Shop() {
               </div>
             </div>
           </div>
+        </div>
+        <div className="col-12 flex justify-center my-10">
+          <Pagination
+            classNames={{
+              wrapper: "gap-0  h-8 border-none ",
+              item: "w-8 h-8 text-small rounded-none bg-transparent outline-none shadow-none",
+              cursor: "text-[#fff] bg-[#35AFA0] rounded-full ",
+            }}
+            total={20}
+            dotsJump={1}
+          />
         </div>
       </div>
     </div>
