@@ -1,3 +1,4 @@
+import image from "../../assets/owner.png"
 export default function AboutUs() {
     return (
         <section>
@@ -9,7 +10,7 @@ export default function AboutUs() {
 
             </main>
             <div className="about">
-                <div className="container lg:max-w-[1200px] lg">
+                <div className="container lg:max-w-[1200px] m-auto">
                     <p className="font-normal text-sm  align-middle">In nec purus eget neque accumsan finibus. Duis condimentum elit ut libero commodo iaculis. Donec augue diam, tristique et ultricies nec, consectetur quis enim. Nullam id
                         rutrum ex. Aliquam a lectus id lacus rhoncus dapibus non ac justo. Vivamus lacinia vestibulum metus in dapibus. Vestibulum sit amet sollicitudin enim. Ut id interdum turpis.
                         Curabitur porta auctor quam, pretium facilisis nisl. Pellentesque efficitur elit ante, vel vulputate tortor blandit nec.</p>
@@ -21,7 +22,7 @@ export default function AboutUs() {
                             interdum turpis. Curabitur porta auctor quam, pretium facilisis nisl. Pellentesque efficitur elit ante, vel vulputate tortor blandit nec.</p>
                     </div>
                     <div className="flex max-xl:flex-col xl:gap-20   gap-0 relative">
-                        <img src="/assets/owner.png" alt="" className="w-full sm:w-1/2 h-auto m-auto" />
+                        <img src={image} alt="" className="w-full sm:w-1/2 h-auto m-auto" />
                         <div className="flex flex-col gap-2  ">
                             <div className="job-title mt-20 mb-10">Rachel Leonard - Bacola CEO</div>
                             <h2 className="font-semibold text-3xl xl:-ml-12 mb-10">Duis convallis luctus pretium Pellentesque habitant morbi</h2>
