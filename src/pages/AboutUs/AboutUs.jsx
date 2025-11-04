@@ -1,8 +1,11 @@
 import image from "../../assets/owner.png"
+import main from "../../assets/main-about.jpg"
+
 export default function AboutUs() {
     return (
         <section>
-            <main className="bg-[url('/assets/main-about.jpg')]  h-[621px] bg-center mb-12 " >
+            <main className={`{bg-[url('${main}')]  h-[621px] bg-center mb-12} `} style={{ backgroundImage: `url(${main})` }}
+            >
                 <div className="overlay bg-black/40 w-full h-full text-white flex justify-center items-center flex-col">
                     <h1 className="font-semibold text-6xl text-center">About for Bacola</h1>
                     <p className="tracking-[4px] uppercase text-xs mt-4">We can do more for you</p>
@@ -56,6 +59,6 @@ export default function AboutUs() {
 
             </div>
 
-        </section>
+        </section >
     )
 }
