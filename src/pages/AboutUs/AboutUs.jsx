@@ -4,7 +4,7 @@ import main from "../../assets/main-about.jpg"
 export default function AboutUs() {
     return (
         <section>
-            <main className=" h-[621px] bg-center mb-12}" style={{ backgroundImage: `url(${main})` }}
+            <main className="h-[621px] bg-center mb-12" style={{ backgroundImage: `url(${main})` }}
             >
                 <div className="overlay bg-black/40 w-full h-full text-white flex justify-center items-center flex-col">
                     <h1 className="font-semibold text-6xl text-center">About for Bacola</h1>
@@ -12,7 +12,7 @@ export default function AboutUs() {
                 </div>
 
             </main>
-            <div className="about text-[#202435]">
+            <div className="about text-[#202435] pb-28">
                 <div className="container lg:max-w-[1200px] m-auto px-4">
                     <p className="font-normal text-sm  align-middle">In nec purus eget neque accumsan finibus. Duis condimentum elit ut libero commodo iaculis. Donec augue diam, tristique et ultricies nec, consectetur quis enim. Nullam id
                         rutrum ex. Aliquam a lectus id lacus rhoncus dapibus non ac justo. Vivamus lacinia vestibulum metus in dapibus. Vestibulum sit amet sollicitudin enim. Ut id interdum turpis.
