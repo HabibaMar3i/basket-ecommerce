@@ -1,7 +1,7 @@
 
 export default function ContactUs() {
     return (
-        <section>
+        <section className="pb-28">
             <div className="container m-auto lg:max-w-[1200px] px-4">
                 <h1 className="text-center text-4xl capitalize text-[#202435] mb-2">get in touch</h1>
                 <p className="text-center max-w-[440px] m-auto text-sm">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Expedita

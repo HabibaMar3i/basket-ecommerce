@@ -12,7 +12,7 @@ export default function AboutUs() {
                 </div>
 
             </main>
-            <div className="about text-[#202435]">
+            <div className="about text-[#202435] pb-28">
                 <div className="container lg:max-w-[1200px] m-auto px-4">
                     <p className="font-normal text-sm  align-middle">In nec purus eget neque accumsan finibus. Duis condimentum elit ut libero commodo iaculis. Donec augue diam, tristique et ultricies nec, consectetur quis enim. Nullam id
                         rutrum ex. Aliquam a lectus id lacus rhoncus dapibus non ac justo. Vivamus lacinia vestibulum metus in dapibus. Vestibulum sit amet sollicitudin enim. Ut id interdum turpis.

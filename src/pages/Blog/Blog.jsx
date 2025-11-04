@@ -14,7 +14,7 @@ export default function Blog() {
 
 
     return (
-        <section>
+        <section className="pb-28">
             <div className="container lg:max-w-[1200px] m-auto px-8">
                 <div className="flex justify-between flex-col lg:flex-row lg:m-auto">
                     {/*  articals section */}
