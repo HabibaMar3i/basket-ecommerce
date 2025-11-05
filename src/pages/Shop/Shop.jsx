@@ -149,8 +149,8 @@ export default function Shop() {
 
           <div className="col-span-12 md:col-span-8 lg:col-span-9  p-2">
             {/* 
-                      Banner Shop
-                      */}
+                Banner Shop
+            */}
             <div className="banarShop text-[#202435] w-full h-[265px] bg-center bg-cover bg-no-repeat  bg-[url(/src/assets/bacola-banner-18.jpg)] flex  items-center justify-center gap-3">
               <div className="textBanner flex flex-col gap-1 ">
                 <p className="text-2xl font-extralight ">
@@ -182,7 +182,7 @@ export default function Shop() {
                     key={"dsds"}
                     className="w-[250px]  bg-transparent"
                     classNames={{
-                      trigger: "bg-transparent ",
+                      trigger: "bg-transparent shadow-none ",
                     }}
                     label="Sort By"
                     labelPlacement={"outside-left"}
