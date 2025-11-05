@@ -187,9 +187,9 @@ export default function Footer() {
                 <p className='font-inter font-normal text-[12px] leading-[18px] opacity-70 tracking-[-0.1px] align-middle text-[#9B9BB4] text-center md:text-left'>Copyright 2025 © All rights reserved by WebMasters</p>
                 <div className='flex flex-col md:flex-row items-center gap-3'>
                     <div className='flex items-center gap-3 justify-center'>
-                        <p className='font-inter font-normal text-[12px] leading-[18px] tracking-[-0.1px] align-middle opacity-70 text-[#9B9BB4]'>Privacy Policy</p>
-                        <p className='font-inter font-normal text-[12px] leading-[18px] tracking-[-0.1px] align-middle opacity-70 text-[#9B9BB4]'>Terms and Conditions</p>
-                        <p className='font-inter font-normal text-[12px] leading-[18px] tracking-[-0.1px] align-middle opacity-70 text-[#9B9BB4]'>Cookie</p>
+                        <a href='#' className='font-inter font-normal text-[12px] leading-[18px] tracking-[-0.1px] align-middle opacity-70 text-[#9B9BB4]  hover:text-[#35AFA0] transition-colors duration-300 cursor-pointer'>Privacy Policy</a>
+                        <a href='#' className='font-inter font-normal text-[12px] leading-[18px] tracking-[-0.1px] align-middle opacity-70 text-[#9B9BB4]  hover:text-[#35AFA0] transition-colors duration-300 cursor-pointer'>Terms and Conditions</a>
+                        <a href='#' className='font-inter font-normal text-[12px] leading-[18px] tracking-[-0.1px] align-middle opacity-70 text-[#9B9BB4]  hover:text-[#35AFA0] transition-colors duration-300 cursor-pointer'>Cookie</a>
                     </div>
                     <img src={footerpayment} alt="payment methods" className='max-w-[200px] md:max-w-none' />
                 </div>
