@@ -1,5 +1,7 @@
 import React from "react";
 
 export default function RelatedProducts() {
-  return <div>RelatedProducts</div>;
+  return (
+    <div>RelatedProducts RelatedProducts RelatedProducts RelatedProducts</div>
+  );
 }
