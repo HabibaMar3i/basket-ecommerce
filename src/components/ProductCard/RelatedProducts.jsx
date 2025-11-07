@@ -19,7 +19,7 @@ export default function RelatedProducts({ products }) {
         spaceBetween={10}
         // pagination={{ clickable: true }}
         breakpoints={{
-          400: { slidesPerView: 1.5 },
+          300: { slidesPerView: 1.5 },
           640: { slidesPerView: 2 },
           1024: { slidesPerView: 4 },
         }}
