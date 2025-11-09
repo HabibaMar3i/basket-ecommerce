@@ -25,10 +25,11 @@ function App() {
         { path: 'cart', element: <Cart /> },
         { path: 'contact-us', element: <ContactUs /> },
         { path: 'shop', element: <Shop /> },
-        { path: 'profile', element: <Profile /> }
+        { path: 'profile', element: <Profile /> },
+        { path: '*', element: <NotFound /> }
       ]
-    },
-    { path: '*', element: <NotFound /> }
+    }
+
   ])
 
   return (
