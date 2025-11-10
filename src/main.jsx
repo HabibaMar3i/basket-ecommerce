@@ -7,17 +7,20 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 import 'flowbite/dist/flowbite.min.js'
 import TokenContextProvider from './components/context/tokenContext.jsx'
 import CategoryContextProvider from './components/context/categoryContext.jsx'
+import OfferContextProvider from './components/context/offerContext.jsx'
 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
 
     <TokenContextProvider>
-      <CategoryContextProvider>
-        <HeroUIProvider>
-          <App />
-        </HeroUIProvider>
-      </CategoryContextProvider>
+      <OfferContextProvider>
+        <CategoryContextProvider>
+          <HeroUIProvider>
+            <App />
+          </HeroUIProvider>
+        </CategoryContextProvider>
+      </OfferContextProvider>
     </TokenContextProvider>
 
   </StrictMode>,

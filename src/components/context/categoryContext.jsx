@@ -39,9 +39,9 @@ export default function CategoryContextProvider({ children }) {
         }
     }, [token]);
 
-    return (
+    return <>
         <categoryContext.Provider value={{ category, setCategory }}>
             {children}
         </categoryContext.Provider>
-    );
+    </>
 }
