@@ -8,69 +8,22 @@ import {
   ModalContent,
   ModalFooter,
 } from "@heroui/react";
-import { useState } from "react";
 import RelatedProducts from "../ProductCard/RelatedProducts";
+import { useProducts } from "../../hooks/useProducts";
+import { useCart } from "../../hooks/uesCart";
 
 export default function ProductDetails({ isOpen, onOpenChange, product }) {
-  const images = [
-    "/src/assets/testSilder/test_3.png",
-    "/src/assets/testSilder/test_2.png",
-    "/src/assets/testSilder/test_1.png",
-  ];
-  const [indexImg, setIndexImg] = useState(0);
+  // const images = [
+  //   "/src/assets/testSilder/test_3.png",
+  //   "/src/assets/testSilder/test_2.png",
+  //   "/src/assets/testSilder/test_1.png",
+  // ];
+  const { products } = useProducts();
 
-  const relatedProducts = [
-    {
-      name: "Fresh Green Leaf Lettuce",
-      image: "https://placehold.co/200x200",
-      status: "IN STOCK",
-      unit: "1 each",
-      originalPrice: 2.74,
-      salePrice: 2.64,
-      reviews: 45,
-      stars: 4.2,
-    },
-    {
-      name: "Leafy Romaine Mixed Lettuce",
-      image: "https://placehold.co/200x200",
-      status: "IN STOCK",
-      unit: "1 each",
-      originalPrice: 2.74,
-      salePrice: 2.5,
-      reviews: 38,
-      stars: 4.0,
-    },
-    {
-      name: "Fresh Express Iceberg Garden Salad Blend",
-      image: "https://placehold.co/200x200",
-      status: "IN STOCK",
-      unit: "1 Bag",
-      originalPrice: 20,
-      salePrice: 15,
-      reviews: 127,
-      stars: 4.5,
-    },
-    {
-      name: "Organic Girl Lettuce",
-      image: "https://placehold.co/200x200",
-      status: null,
-      unit: "1 Bag",
-      originalPrice: 2.0,
-      salePrice: 1.5,
-      reviews: 89,
-      stars: 4.3,
-    },
-    {
-      name: "Organic Spring Mix",
-      image: "https://placehold.co/200x200",
-      status: "IN STOCK",
-      unit: "1 each",
-      originalPrice: 3.9,
-      salePrice: 2.6,
-      reviews: 156,
-      stars: 4.6,
-    },
-  ];
+  // const randomProducts = products.sort(() => 0.5 - Math.random()).slice(0, 10);
+
+  const { cart, addToCart, decreaseQuantity } = useCart();
+  const cartItem = cart.find((i) => i._id === product._id);
 
   return (
     <div>
@@ -91,39 +44,12 @@ export default function ProductDetails({ isOpen, onOpenChange, product }) {
                     */}
                     <div className="col-span-12 md:col-span-6 lg:col-span-7 sm:col-span-12">
                       <div className="flex gap-5">
-                        <div className="">
-                          {images.map((img, index) => (
-                            <Card
-                              key={index}
-                              isPressable
-                              onPress={() => setIndexImg(index)}
-                              className={`w-20 h-20 p-1 cursor-pointer rounded-xl shadow-none 
-              ${
-                setIndexImg === index ? "border-blue-400" : "border-transparent"
-              }`}
-                            >
-                              <CardBody
-                                className={`p-0 overflow-hidden flex items-center justify-center rounded-sm shadow-none border-[2px] ${
-                                  index === indexImg
-                                    ? " border-[#80D8C7]"
-                                    : " border-[#E7ECF0]"
-                                } `}
-                              >
-                                <Image
-                                  src={img}
-                                  alt={`Thumbnail ${index}`}
-                                  className="object-contain w-full h-full"
-                                  radius="none"
-                                />
-                              </CardBody>
-                            </Card>
-                          ))}
-                        </div>
+                        <div className=""></div>
                         <div className="relative flex-1 flex items-center justify-center">
                           <Card className="w-full h-[400px] flex items-center justify-center rounded-sm shadow-none border-[1px] border-[#E7ECF0]">
                             <CardBody className="flex items-center justify-center ">
                               <Image
-                                src={images[indexImg]}
+                                src={product.Image.url}
                                 alt="Main Image"
                                 className="object-contain max-h-[350px]"
                                 radius="none"
@@ -137,26 +63,24 @@ export default function ProductDetails({ isOpen, onOpenChange, product }) {
                     Product 
                     */}
                     <div className="col-span-12 md:col-span-6 lg:col-span-5 sm:col-span-12">
-                      {/* 
-                        name  & price
-                        */}
+                      {/* name  & price */}
+
                       <div className="">
                         <h3 className="text-2xl font-medium text-[#000000]">
-                          {product.name}
+                          {product.Name}
                         </h3>
                         <h3 className="text-2xl mt-5 font-medium text-[#000000]">
-                          ${product.originalPrice} - ${product.originalPrice}
+                          ${product.Price}
                         </h3>
                       </div>
                       {/* 
                         Sizes
                         */}
                       <div className="">
-                        <p className="">Available in:</p>
+                        <p className="">Avilable :</p>
                         <div className="mt-2 flex gap-2">
                           <span className=" p-[5px] border-[1px] border-[#E7ECF0] rounded-sm ">
-                            {" "}
-                            Small{" "}
+                            Small
                           </span>
                           <span className="p-[5px] border-[1px] border-[#E7ECF0] rounded-sm ">
                             {" "}
@@ -176,13 +100,29 @@ export default function ProductDetails({ isOpen, onOpenChange, product }) {
                           className="flex my-3
                          justify-evenly items-center w-full mt-5 bg-[#F3F5F9] h-[50px]"
                         >
-                          <Button className="w-[40px] h-[40px] rounded-sm bg-[transparent]">
+                          <Button
+                            className="w-[40px] h-[40px] rounded-sm bg-[transparent]"
+                            onPress={() => {
+                              decreaseQuantity(product._id);
+                            }}
+                            isDisabled={!cartItem || cartItem.quantity === 0}
+                          >
+                            {/* minus  */}
                             <div className="mins">
                               <i class="fa-solid fa-minus"></i>
                             </div>
                           </Button>
-                          <div className="num text-lg font-semibold">0</div>
-                          <Button className="w-[40px] h-[40px] rounded-sm bg-[transparent]">
+                          {/* count */}
+                          <div className="num text-lg font-semibold">
+                            {cartItem?.quantity || 0}
+                          </div>
+                          <Button
+                            className="w-[40px] h-[40px] rounded-sm bg-[transparent]"
+                            onPress={() => {
+                              addToCart(product);
+                            }}
+                          >
+                            {/* pls  */}
                             <div className="pls">
                               <i class="fa-solid fa-plus"></i>
                             </div>
@@ -193,6 +133,9 @@ export default function ProductDetails({ isOpen, onOpenChange, product }) {
                             className="w-full  bg-[#35AFA0] text-[#fff] "
                             radius="sm"
                             isLoading={false}
+                            onPress={() => {
+                              addToCart(product);
+                            }}
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -269,20 +212,11 @@ export default function ProductDetails({ isOpen, onOpenChange, product }) {
                             </g>
                             <defs></defs>
                           </svg>
-                          Tags :
+                          Category :
                         </p>
                         <div className="">
                           <span className="py-1 m-0.5 px-2 rounded-sm bg-[transparent] border-[1px] border-[#E7ECF0] ">
-                            Fast Food
-                          </span>
-                          <span className="py-1 m-0.5 px-2 rounded-sm bg-[transparent] border-[1px] border-[#E7ECF0] ">
-                            Organic Corn
-                          </span>
-                          <span className="py-1 m-0.5 px-2 rounded-sm bg-[transparent] border-[1px] border-[#E7ECF0] ">
-                            Flavoured
-                          </span>
-                          <span className="py-1 m-0.5 px-2 rounded-sm bg-[transparent] border-[1px] border-[#E7ECF0] ">
-                            Dry Food
+                            {product.categoryId.name}
                           </span>
                         </div>
                       </div>
@@ -307,7 +241,7 @@ export default function ProductDetails({ isOpen, onOpenChange, product }) {
                 </div>
               </ModalBody>
               <ModalFooter>
-                <RelatedProducts products={relatedProducts} />
+                <RelatedProducts products={products} />
               </ModalFooter>
             </>
           )}

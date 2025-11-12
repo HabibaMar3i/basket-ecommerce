@@ -1,71 +1,39 @@
-import { Checkbox, CheckboxGroup, NumberInput } from "@heroui/react";
 import React from "react";
+import { Checkbox, CheckboxGroup, NumberInput } from "@heroui/react";
+import { useCategories } from "../../hooks/uesCategories";
+import { useProducts } from "../../hooks/useProducts";
 
 export default function FilterCategories() {
-  const categories = {
-    productCategories: [
-      {
-        name: "Beverages",
-      },
-      {
-        name: "Breads & Bakery",
-      },
-      {
-        name: "Breakfast & Dairy",
-      },
-      {
-        name: "Frozen Foods",
-      },
-      {
-        name: "Fruits & Vegetables",
-      },
-      {
-        name: "Grocery & Staples",
-      },
-      {
-        name: "Household Needs",
-      },
-      {
-        name: "Meats & Seafood",
-      },
-    ],
-    brands: [
-      {
-        name: "Frito Lay",
-        count: 8,
-      },
-      {
-        name: "Quaker",
-        count: 36,
-      },
-      {
-        name: "Cola",
-        count: 1,
-      },
-      {
-        name: "Welch's",
-        count: 1,
-      },
-      {
-        name: "Oreo",
-        count: 16,
-      },
-    ],
-    itemInStock: {
-      inStock: 62,
-      outOfStock: 0,
-    },
-    sortBy: {
-      options: [
-        "Price: Low to High",
-        "Price: High to Low",
-        "Name: A to Z",
-        "Name: Z to A",
-        "Best Selling",
-        "Newest",
-      ],
-    },
-  };
+  // import categories & products from context
+  const { categories } = useCategories();
+  const { products } = useProducts();
+
+  // Calc Brands Count
+  const brandCounts = products.reduce((acc, product) => {
+    const brand = product.Brand.Name || "Unknown";
+    acc[brand] = (acc[brand] || 0) + 1;
+    return acc;
+  }, {});
+
+  const brandsArray = Object.entries(brandCounts).map(([brand, count]) => ({
+    brand,
+    count,
+  }));
+
+  // calc availability
+
+  const availabilityCounts = products.reduce((acc, product) => {
+    const status = product.available || "Unknown";
+    acc[status] = (acc[status] || 0) + 1;
+    return acc;
+  }, {});
+
+  const availabilityArray = Object.entries(availabilityCounts).map(
+    ([status, count]) => ({
+      status,
+      count,
+    })
+  );
   return (
     <div>
       <div className="navShop">
@@ -77,9 +45,9 @@ export default function FilterCategories() {
         </h2>
         <div className="productCategories">
           <CheckboxGroup size="sm">
-            {categories.productCategories.map((categoriy, i) => {
+            {categories.map((categoriy) => {
               return (
-                <Checkbox key={i} value={categoriy.name}>
+                <Checkbox key={categoriy._id} value={categoriy.name}>
                   {" "}
                   <span className="text-[#71778E]"> {categoriy.name} </span>
                 </Checkbox>
@@ -93,11 +61,11 @@ export default function FilterCategories() {
         <h2 className=" text-base uppercase font-semibold mt-6 mb-6">Brands</h2>
         <div className="brands">
           <CheckboxGroup size="sm" className="w-full space-y-1">
-            {categories.brands.map((brand, i) => (
-              <Checkbox key={i} value={brand.name}>
+            {brandsArray.map((product, i) => (
+              <Checkbox key={i} value={product.name}>
                 <div className="flex justify-between w-[200px] items-center text-[#71778E]">
-                  <span className="text-sm">{brand.name}</span>
-                  <span className="text-xs">({brand.count})</span>
+                  <span className="text-sm">{product.brand}</span>
+                  <span className="text-xs">({product.count})</span>
                 </div>
               </Checkbox>
             ))}
@@ -134,19 +102,17 @@ export default function FilterCategories() {
         </h2>
         <div className="productCategories">
           <CheckboxGroup size="sm">
-            <Checkbox value={"inStock"}>
-              <span className="text-[#71778E] w-[200px] flex justify-between">
-                {" "}
-                <span> In stock </span>
-                <span> ( {categories.itemInStock.inStock} ) </span>
-              </span>
-            </Checkbox>
-            <Checkbox value={"outOfStock"}>
-              <span className="text-[#71778E] w-[200px] flex justify-between">
-                <span> Out of stock </span>
-                <span> ( {categories.itemInStock.outOfStock} ) </span>
-              </span>
-            </Checkbox>
+            {availabilityArray.map((st) => {
+              return (
+                <Checkbox value={"inStock"}>
+                  <span className="text-[#71778E] w-[200px] flex justify-between">
+                    {" "}
+                    <span className="text-sm"> {st.status} </span>
+                    <span className="text-xs"> ({st.count}) </span>
+                  </span>
+                </Checkbox>
+              );
+            })}
           </CheckboxGroup>
         </div>
         <div className="bannarFilter mt-5">
