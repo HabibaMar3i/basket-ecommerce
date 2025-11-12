@@ -1,51 +1,83 @@
-// import axios from "axios"
+import axios from "axios"
 import banner from "../../assets/Widget-Banner.png"
-// import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 export default function Blog() {
-    // async function getAllBlogs() {
-    //     const data = await axios.get("https://e-commarce-website-eight.vercel.app/api/v1/blog/get-all-blog")
-    //     console.log(data)
-    // }
-    // useEffect(() => {
-    //     getAllBlogs()
+    const [items, setItems] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 2; // عدد المقالات في الصفحة
 
-    // }, [])
+    const totalPages = Math.ceil(items.length / itemsPerPage);
+
+    // المقالات اللي هتظهر في الصفحة الحالية
+    const currentItems = items.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
+
+    async function getAllBlogs() {
+        try {
+            const token = localStorage.getItem("userToken");
+            const { data } = await axios.get(
+                "https://e-commarce-website-eight.vercel.app/api/v1/blog/get-all-blog",
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            setItems(data.data);
+        } catch (err) {
+            console.error("Error fetching blogs:", err);
+        }
+    }
+
+
+    useEffect(() => {
+        getAllBlogs()
+
+    }, [])
+    useEffect(() => {
+        if (currentPage > totalPages) {
+            setCurrentPage(1);
+        }
+    }, [currentPage, totalPages]);
 
 
     return (
         <section className="pb-28">
             <div className="container lg:max-w-[1200px] m-auto px-8">
+
                 <div className="flex justify-between flex-col lg:flex-row lg:m-auto">
                     {/*  articals section */}
                     <div className="articals lg:w-[70%]">
-                        <article className='mb-14'>
-                            <img src="https://placehold.co/600x400" alt="" className='xl:w-[855px] xl:h-[598.5px] w-full h-auto   rounded-md object-cover' />
-                            <div className="category mt-5">Grocery</div>
-                            <h2 className='font-semibold text-[36px] leading-9 my-4'>But I must explain to you how all this mistaken
-                                idea</h2>
-                            <div className="info  mb-6 "><span className='text-[#71778E] mr-4'>Jan 13 2025</span> Sinan ISIK</div>
-                            <p className='text-[#202435]'>
-                                Donec rhoncus quis diam sit amet faucibus. Vivamus pellentesque, sem sed convallis ultricies, ante eros laoreet libero,
-                                vitae suscipit lorem turpis sit amet lectus. Quisque egestas lorem ut mauris ultrices,...
-                            </p>
-                        </article>
-                        <article className='mb-14'>
-                            <img src="https://placehold.co/600x400" alt="" className='xl:w-[855px] xl:h-[598.5px] w-full h-auto rounded-md object-cover' />
-                            <div className="category mt-5">Grocery</div>
-                            <h2 className='font-semibold text-[36px] leading-9 my-4'>But I must explain to you how all this mistaken
-                                idea</h2>
-                            <div className="info  mb-6 "><span className='text-[#71778E] mr-4'>Jan 13 2025</span> Sinan ISIK</div>
-                            <p className='text-[#202435]'>
-                                Donec rhoncus quis diam sit amet faucibus. Vivamus pellentesque, sem sed convallis ultricies, ante eros laoreet libero,
-                                vitae suscipit lorem turpis sit amet lectus. Quisque egestas lorem ut mauris ultrices,...
-                            </p>
-                        </article>
-                        <div className="pag flex gap-2 justify-center items-center mt-4">
-                            <div className="page flex justify-center items-center text-white bg-[#35AFA0] rounded-full w-9 h-9">1</div>
-                            <div className="page flex justify-center items-center text-black w-9 h-9">2</div>
-                            <i class="fa-solid fa-angle-right"></i>
+                        {currentItems.map((artical, index) => (
+                            <div className='mb-14' key={index}>
+                                <img src={artical.Image.url} alt="" className='xl:w-[855px] xl:h-[598.5px] w-full h-auto   rounded-md object-cover' />
+                                <div className="category mt-5">{artical.Tags}</div>
+                                <h2 className='font-semibold text-[36px] leading-9 my-4'>{artical.title}</h2>
+                                <div className="info  mb-6 "><span className='text-[#71778E] mr-4'>{new Date(artical.createdAt)
+                                    .toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
+                                    .replace(",", "")}</span>{artical.author}</div>
+                                <p className='text-[#202435]'>
+                                    {artical.content}
+                                </p>
+                            </div>
 
+                        )
+                        )}
+
+
+                        <div className="pag flex gap-2 justify-center items-center mt-4">
+                            {Array.from({ length: totalPages }, (_, i) => (
+
+                                <div key={i + 1} onClick={() => setCurrentPage(i + 1)}
+                                    className={`page flex justify-center items-center ${currentPage === i + 1 ? 'bg-[#35AFA0] text-white' : ''}  rounded-full w-9 h-9 cursor-pointer`}>{i + 1}</div>
+
+                            ))}
+                            {/* <div className="page flex justify-center items-center text-black w-9 h-9">2</div> */}
+                            <i className="fa-solid fa-angle-right cursor-pointer" onClick={() => setCurrentPage(currentPage + 1)}></i>
                         </div>
                     </div>
                     {/* aside section */}
@@ -53,27 +85,18 @@ export default function Blog() {
                         <div className="posts-parent max-lg:mt-5">
                             <h3 className="uppercase mb-4 ">recent posts</h3>
                             <div className="Recent-Posts rounded-lg border border-[#EDEEF5]  p-4">
-                                <div className="Post flex  items-center ">
-                                    <div className="image h-[60px] w-[60px] shrink-0  relative ">
-                                        <img src="https://placehold.co/600x400" alt="" className='h-full w-full rounded-full  object-cover' />
-                                        <div className="num absolute w-2.5 h-2.5 flex justify-center items-center bg-[#35AFA0] rounded-full p-2 top-0 right-0 border-white border text-white">1</div>
+                                {items.slice(0, 3).map((post, index) => (
+                                    <div key={index} className="Post flex  items-center mb-10 last-of-type:mb-0">
+                                        <div className="image h-[60px] w-[60px] shrink-0  relative ">
+                                            <img src={post.Image.url} alt="" className='h-full w-full rounded-full  object-cover' />
+                                            <div className="num absolute w-2.5 h-2.5 flex justify-center items-center bg-[#35AFA0] rounded-full p-2 top-0 right-0 border-white border text-white">{index + 1}</div>
+                                        </div>
+                                        <h3 className='ml-2.5 text-sm font-medium'>{post.title}</h3>
                                     </div>
-                                    <h3 className='ml-2.5 text-sm font-medium'>But I must explain to you how all this mistaken idea</h3>
-                                </div>
-                                <div className="Post flex  items-center my-10 ">
-                                    <div className="image h-[60px] w-[60px] shrink-0  relative ">
-                                        <img src="https://placehold.co/600x400" alt="" className='h-full w-full rounded-full  object-cover' />
-                                        <div className="num absolute w-2.5 h-2.5 flex justify-center items-center bg-[#35AFA0] rounded-full p-2 top-0 right-0 border-white border text-white">2</div>
-                                    </div>
-                                    <h3 className='ml-2.5 text-sm font-medium'>The Problem With Typefaces on the Web</h3>
-                                </div>
-                                <div className="Post flex  items-center  ">
-                                    <div className="image h-[60px] w-[60px] shrink-0  relative ">
-                                        <img src="https://placehold.co/600x400" alt="" className='h-full w-full rounded-full  object-cover' />
-                                        <div className="num absolute w-2.5 h-2.5 flex justify-center items-center bg-[#35AFA0] rounded-full p-2 top-0 right-0 border-white border text-white">3</div>
-                                    </div>
-                                    <h3 className='ml-2.5 text-sm font-medium font-medium'>English Breakfast Tea With Tasty Donut Desserts</h3>
-                                </div>
+                                ))}
+
+
+
 
                             </div>
                         </div>
@@ -131,6 +154,6 @@ export default function Blog() {
 
                 </div>
             </div>
-        </section>
+        </section >
     )
 }
