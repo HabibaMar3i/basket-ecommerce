@@ -19,7 +19,7 @@ export default function HomePage() {
         <>
             <SpecialStore />
 
-            <section className="mt-10 mb-30 mx-4 lg:mx-40">
+            <section className="mt-10 mb-30 px-4 lg:px-8">
                 {/* category section */}
                 <Category />
 
@@ -33,7 +33,7 @@ export default function HomePage() {
                             <img
                                 src={mainhome}
                                 alt="Home"
-                                className="w-full lg:w-[570px] h-[200px] lg:h-[251.17px] object-cover object-top rounded-xl"
+                                className="w-full h-[200px] lg:h-[251.17px] object-cover object-top rounded-xl"
                             />
                             <div className="absolute inset-0">
                                 <div className="absolute top-8 lg:top-15 left-4 lg:left-10">
@@ -43,7 +43,7 @@ export default function HomePage() {
                                         <p className="font-inter font-normal text-[12px] leading-[18px] tracking-[-0.1px] align-middle text-[#3E445A]">Bacola Weekend Discount</p>
                                     </div>
                                     <Link to={'/shop'}>
-                                        <button className="w-[100.13px] cursor-pointer h-[34px] mt-3 lg:mt-5 rounded-[30px] border border-[#233A95] bg-[#233A95] hover:bg-[#1c2f78] transition-colors duration-300 font-medium font-inter text-[12px] leading-[18px] tracking-[-0.1px] align-middle text-white">Shop Now</button>
+                                        <button className="px-4 py-2 cursor-pointer mt-3 lg:mt-5 rounded-[30px] border border-[#233A95] bg-[#233A95] hover:bg-[#1c2f78] transition-colors duration-300 font-medium font-inter text-[12px] leading-[18px] tracking-[-0.1px] align-middle text-white">Shop Now</button>
                                     </Link>
                                 </div>
                             </div>
@@ -55,7 +55,7 @@ export default function HomePage() {
                             <img
                                 src={mainhome2}
                                 alt="Home"
-                                className="w-full lg:w-[570px] h-[200px] lg:h-[251.17px] object-cover object-top rounded-xl"
+                                className="w-full h-[200px] lg:h-[251.17px] object-cover object-top rounded-xl"
                             />
                             <div className="absolute inset-0">
                                 <div className="absolute top-8 lg:top-15 left-4 lg:left-10">
@@ -65,7 +65,7 @@ export default function HomePage() {
                                         <p className="font-inter font-normal text-[12px] leading-[18px] tracking-[-0.1px] align-middle text-[#3E445A]">Bacola Weekend Discount</p>
                                     </div>
                                     <Link to={'/shop'}>
-                                        <button className="w-[100.13px] h-[34px] rounded-[30px] border mt-3 lg:mt-5 cursor-pointer border-[#ED174A] bg-[#ED174A] opacity-100 hover:bg-[#c9103e] transition-colors duration-300 font-medium font-inter text-[12px] leading-[18px] tracking-[-0.1px] align-middle text-white">Shop Now</button>
+                                        <button className="px-4 py-2 rounded-[30px] border mt-3 lg:mt-5 cursor-pointer border-[#ED174A] bg-[#ED174A] opacity-100 hover:bg-[#c9103e] transition-colors duration-300 font-medium font-inter text-[12px] leading-[18px] tracking-[-0.1px] align-middle text-white">Shop Now</button>
                                     </Link>
                                 </div>
                             </div>
@@ -83,7 +83,7 @@ export default function HomePage() {
                 <section className="mt-10">
                     {/* Discount banners section */}
                     <div className="flex flex-col lg:flex-row gap-4 lg:gap-8">
-                        <section className="w-full lg:w-[370px] h-[218.6300048828125px] rounded-xl overflow-hidden relative">
+                        <section className="w-full lg:flex-1 lg:max-w-[370px] h-[218.6300048828125px] rounded-xl overflow-hidden relative">
                             <img
                                 src={discount1}
                                 alt="Home"
@@ -103,7 +103,7 @@ export default function HomePage() {
                             </div>
                         </section>
 
-                        <section className="w-full lg:w-[370px] h-[218.6300048828125px] rounded-xl overflow-hidden relative">
+                        <section className="w-full lg:flex-1 lg:max-w-[370px] h-[218.6300048828125px] rounded-xl overflow-hidden relative">
                             <img
                                 src={discount2}
                                 alt="Home"
@@ -123,7 +123,7 @@ export default function HomePage() {
                             </div>
                         </section>
 
-                        <section className="w-full lg:w-[370px] h-[218.6300048828125px] rounded-xl overflow-hidden relative">
+                        <section className="w-full lg:flex-1 lg:max-w-[370px] h-[218.6300048828125px] rounded-xl overflow-hidden relative">
                             <img
                                 src={discount3}
                                 alt="Home"
@@ -147,7 +147,7 @@ export default function HomePage() {
                     {/* Blog posts section */}
                     <div className="mt-10 flex flex-col lg:flex-row gap-6 lg:gap-8">
                         {/* Blog Post 1 */}
-                        <div className="w-full lg:w-[370px] flex flex-col gap-3">
+                        <div className="w-full lg:flex-1 flex flex-col gap-3">
                             <img
                                 src={home1}
                                 className="w-full h-[200px] lg:h-[259px] opacity-100 object-cover rounded-xl"
@@ -161,7 +161,7 @@ export default function HomePage() {
                         </div>
 
                         {/* Blog Post 2 */}
-                        <div className="w-full lg:w-[370px] flex flex-col gap-3">
+                        <div className="w-full lg:flex-1 flex flex-col gap-3">
                             <img
                                 src={home2}
                                 className="w-full h-[200px] lg:h-[259px] opacity-100 object-cover rounded-xl"
@@ -175,7 +175,7 @@ export default function HomePage() {
                         </div>
 
                         {/* Blog Post 3 */}
-                        <div className="w-full lg:w-[370px] flex flex-col gap-3">
+                        <div className="w-full lg:flex-1 flex flex-col gap-3">
                             <img
                                 src={home3}
                                 className="w-full h-[200px] lg:h-[259px] opacity-100 object-cover rounded-xl"
