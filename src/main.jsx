@@ -10,6 +10,8 @@ import { CategoriesProvider } from "./components/context/CategoriesProvider.jsx"
 import { ProductProvider } from "./components/context/productsProvider.jsx";
 import { GetProductByIdProvider } from "./components/context/GetProductByIdProvider.jsx";
 import CartProvider from "./components/context/CartProvider.jsx";
+import ProductContextProvider from "./components/context/productContext.jsx";
+import OfferContextProvider from "./components/context/offerContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -17,11 +19,15 @@ createRoot(document.getElementById("root")).render(
       <TokenContextProvider>
         <CategoriesProvider>
           <ProductProvider>
-            <GetProductByIdProvider>
-              <CartProvider>
-                <App />
-              </CartProvider>
-            </GetProductByIdProvider>
+            <ProductContextProvider>
+              <OfferContextProvider>
+                <GetProductByIdProvider>
+                  <CartProvider>
+                    <App />
+                  </CartProvider>
+                </GetProductByIdProvider>
+              </OfferContextProvider>
+            </ProductContextProvider>
           </ProductProvider>
         </CategoriesProvider>
       </TokenContextProvider>

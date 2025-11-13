@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
-import { categoryContext } from '../context/categoryContext';
+import React from 'react';
+import { useCategories } from '../../hooks/uesCategories';
 
 export default function Category() {
-    let { category } = useContext(categoryContext);
+    const { categories: category } = useCategories();
 
     return (
         <>
@@ -14,11 +14,15 @@ export default function Category() {
                         <div className="w-full lg:w-[233.59px] h-[290.39px] border border-[#E4E5EE] opacity-100 rotate-0 flex flex-col items-center justify-center mb-4 lg:mb-0">
                             {/* image placeholder */}
                             <div className="w-[192.59px] h-[192.59px] bg-[#F3F4F6] rounded-md flex items-center justify-center text-[#9B9BB4] text-sm overflow-hidden">
-                                <img
-                                    src={category[0]?.Image?.url}
-                                    alt={category[0]?.name}
-                                    className="w-full h-full object-cover"
-                                />
+                                {category[0]?.Image?.url ? (
+                                    <img
+                                        src={category[0].Image.url}
+                                        alt={category[0]?.name}
+                                        className="w-full h-full object-cover"
+                                    />
+                                ) : (
+                                    <span>No Image</span>
+                                )}
                             </div>
                             <div className="mt-5">
                                 <h1 className="font-Inter font-semibold text-[14px] leading-[16.8px] text-center align-middle text-[#202435]">
@@ -38,11 +42,15 @@ export default function Category() {
                                         className="w-full lg:w-[233.59px] h-[145.19px] border-[#E4E5EE] border lg:border-r lg:border-t lg:border-b opacity-100 rotate-0 flex gap-7 px-7 py-8"
                                     >
                                         <div className="w-[70px] h-[70px] bg-[#F3F4F6] rounded-md flex items-center justify-center text-[#9B9BB4] text-sm overflow-hidden">
-                                            <img
-                                                src={cat.Image?.url}
-                                                alt={cat.name}
-                                                className="w-full h-full object-cover"
-                                            />
+                                            {cat.Image?.url ? (
+                                                <img
+                                                    src={cat.Image.url}
+                                                    alt={cat.name}
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            ) : (
+                                                <span>No Image</span>
+                                            )}
                                         </div>
                                         <div>
                                             <h1 className="w-[66.5px] mt-2 h-[33.79px] font-inter font-semibold text-[14px] leading-[16.8px] align-middle text-[#202435] opacity-100 rotate-0">
@@ -63,11 +71,15 @@ export default function Category() {
                                         className="w-full lg:w-[233.59px] h-[145.19px] border-[#E4E5EE] border lg:border-r lg:border-t lg:border-b opacity-100 rotate-0 flex gap-7 px-7 py-8"
                                     >
                                         <div className="w-[70px] h-[70px] bg-[#F3F4F6] rounded-md flex items-center justify-center text-[#9B9BB4] text-sm overflow-hidden">
-                                            <img
-                                                src={cat.Image?.url}
-                                                alt={cat.name}
-                                                className="w-full h-full object-cover"
-                                            />
+                                            {cat.Image?.url ? (
+                                                <img
+                                                    src={cat.Image.url}
+                                                    alt={cat.name}
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            ) : (
+                                                <span>No Image</span>
+                                            )}
                                         </div>
                                         <div>
                                             <h1 className="w-[66.5px] mt-2 h-[33.79px] font-inter font-semibold text-[14px] leading-[16.8px] align-middle text-[#202435] opacity-100 rotate-0">

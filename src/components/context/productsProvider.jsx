@@ -1,12 +1,15 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { ProductsContext } from "./contexts";
+import { tokenContext } from "./tokenContext";
+
 export function ProductProvider({ children }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { token } = useContext(tokenContext);
+
   useEffect(() => {
-    const token = localStorage.getItem("userToken");
     const domain = "https://e-commarce-website-eight.vercel.app";
     const fetchProducts = async () => {
       try {
@@ -28,10 +31,9 @@ export function ProductProvider({ children }) {
     if (token) {
       fetchProducts();
     } else {
-      setError("No token found");
       setLoading(false);
     }
-  }, []);
+  }, [token]);
   return (
     <ProductsContext.Provider value={{ products, loading, error }}>
       {children}
