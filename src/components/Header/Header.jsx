@@ -1,8 +1,13 @@
 import { Input } from "@heroui/react";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { CartContext } from "../context/contexts";
 import logo from "./../../assets/logo.svg";
 
 export default function Header() {
+    const { totalPrice, getCartItemCount } = useContext(CartContext);
+    const itemCount = getCartItemCount();
+    
     return (
         <>
             <header className="bg-white w-full">
@@ -32,9 +37,16 @@ export default function Header() {
                             <i className="fa-regular fa-user text-[#3E445A] group-hover:text-white transition-colors"></i>
                         </Link>
 
-                        <Link to="/cart" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                            <span className="font-semibold text-[#3E445A] text-sm sm:text-base">$0.00</span>
-                            <i className="fa-solid fa-cart-shopping text-[#35AFA0] text-lg hover:scale-110 transition-transform"></i>
+                        <Link to="/cart" className="flex items-center gap-2 hover:opacity-80 transition-opacity relative">
+                            <span className="font-semibold text-[#3E445A] text-sm sm:text-base">${(totalPrice || 0).toFixed(2)}</span>
+                            <div className="relative">
+                                <i className="fa-solid fa-cart-shopping text-[#35AFA0] text-lg hover:scale-110 transition-transform"></i>
+                                {itemCount > 0 && (
+                                    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                                        {itemCount}
+                                    </span>
+                                )}
+                            </div>
                         </Link>
                     </div>
                 </div>

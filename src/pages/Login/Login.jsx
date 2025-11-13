@@ -47,6 +47,7 @@ export default function Login() {
       setIsCallingApi(false);
 
       localStorage.setItem("userToken", data.AccessToken);
+      localStorage.setItem("userData", JSON.stringify(data.user));
       setToken(data.AccessToken);
       navigate("/");
     } catch (error) {

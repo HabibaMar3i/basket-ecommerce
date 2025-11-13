@@ -22,8 +22,8 @@ export default function ProductDetails({ isOpen, onOpenChange, product }) {
 
   // const randomProducts = products.sort(() => 0.5 - Math.random()).slice(0, 10);
 
-  const { cart, addToCart, decreaseQuantity } = useCart();
-  const cartItem = cart.find((i) => i._id === product?._id);
+  const { addToCart, decreaseQuantity, getProductQuantityInCart } = useCart();
+  const quantity = getProductQuantityInCart(product?._id);
 
   return (
     <div>
@@ -105,7 +105,7 @@ export default function ProductDetails({ isOpen, onOpenChange, product }) {
                             onPress={() => {
                               decreaseQuantity(product._id);
                             }}
-                            isDisabled={!cartItem || cartItem.quantity === 0}
+                            isDisabled={quantity === 0}
                           >
                             {/* minus  */}
                             <div className="mins">
@@ -114,7 +114,7 @@ export default function ProductDetails({ isOpen, onOpenChange, product }) {
                           </Button>
                           {/* count */}
                           <div className="num text-lg font-semibold">
-                            {cartItem?.quantity || 0}
+                            {quantity}
                           </div>
                           <Button
                             className="w-[40px] h-[40px] rounded-sm bg-[transparent]"
