@@ -19,7 +19,8 @@ export const CheckoutProvider = ({ children }) => {
   const createOrder = async (orderData, onSuccess) => {
     setLoading(true);
     try {
-      const orderResponse = await fetch("https://e-commarce-website-eight.vercel.app/api/v1/order/create-order", {
+      const domain = process.env.NODE_ENV === 'production' ? '' : 'https://e-commarce-website-eight.vercel.app';
+      const orderResponse = await fetch(`${domain}/api/v1/order/create-order`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -33,13 +34,13 @@ export const CheckoutProvider = ({ children }) => {
       }
       
       const orderResult = await orderResponse.json();
-      const orderId = orderResult.orderId || orderResult.order?._id || orderResult._id || orderResult.id;
+      const orderId = orderResult.orderId;
       
       if (!orderId) {
         throw new Error('No order ID returned from order creation');
       }
       
-      const stripeResponse = await fetch(`https://e-commarce-website-eight.vercel.app/api/v1/payment/checkout/${orderId}`, {
+      const stripeResponse = await fetch(`${domain}/api/v1/payment/checkout/${orderId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
