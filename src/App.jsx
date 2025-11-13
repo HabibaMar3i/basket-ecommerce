@@ -14,6 +14,8 @@ import Profile from './pages/Profile/Profile';
 import NotFound from './pages/NotFound/NotFound';
 import ProtectedRoute from './components/ProtectedRoute';
 import AuthRoute from './components/AuthRoute';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
 
@@ -45,6 +47,18 @@ function App() {
   return (
     <>
       <RouterProvider router={routes}></RouterProvider>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </>
   )
 }

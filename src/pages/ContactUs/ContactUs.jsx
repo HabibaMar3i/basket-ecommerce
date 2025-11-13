@@ -1,5 +1,48 @@
+import axios from "axios";
+import { useState } from "react";
 
 export default function ContactUs() {
+    const [contact, setContact] = useState({
+        Name: "",
+        Phone: "",
+        Email: "",
+        Message: "",
+    });
+    const [message, setMesssage] = useState("")
+    async function createMessage() {
+        try {
+            const token = localStorage.getItem("userToken");
+            const { data } = await axios.post(
+                "https://e-commarce-website-eight.vercel.app/api/v1/contact-us/add-ContactUs",
+                contact,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+
+                        Authorization: `Bearer ${token}`,
+                    },
+
+                }
+            );
+            setMesssage(data.response.data.message)
+            console.log("Fetched data:", data);
+        } catch (err) {
+            const msg = err?.response?.data?.message || "Something went wrong";
+
+            if (msg.includes("Phone_1 dup key"))
+                setMesssage("phone is exist")
+            else if (msg.includes("Email_1 dup key")) {
+                setMesssage("email is exist")
+
+            } else {
+                setMesssage(typeof msg === "string" ? msg : JSON.stringify(msg));
+
+
+            }
+            console.error("Error fetching:", err);
+
+        }
+    }
     return (
         <section className="pb-28">
             <div className="container m-auto lg:max-w-[1200px] px-4">
@@ -33,32 +76,36 @@ export default function ContactUs() {
                         offices.
                     </p>
                     <hr className="my-14  text-[#EDEEF5]" />
-
+                    <h4 className="text-lg mb-4 capitalize">{message}</h4>
                     <div className="group">
                         <div className="flex max-sm:flex-col w-full gap-5">
                             <div className="sm:w-1/2">
-                                <label for="Name" class="block mb-2 text-sm font-base text-gray-900">Name</label>
-                                <input type="text" id="Name" class="bg-[#F3F4F7]   text-gray-900 text-sm rounded-sm focus:outline-[#35AFA0] focus:border-[#35AFA0] block w-full p-2.5 " required />
+                                <label for="Name" class="block mb-2 text-sm font-base text-gray-900">Name </label>
+                                <input onChange={(e) => setContact({ ...contact, Name: e.target.value })}
+                                    value={contact.Name} type="text" id="Name" class="bg-[#F3F4F7]   text-gray-900 text-sm rounded-sm focus:outline-[#35AFA0] focus:border-[#35AFA0] block w-full p-2.5 " required />
 
                             </div>
 
                             <div className="sm:w-1/2">
                                 <label for="email" class="block mb-2 text-sm font-base text-gray-900">Email *</label>
-                                <input type="text" id="email" class="bg-[#F3F4F7]  text-gray-900 text-sm rounded-sm focus:outline-[#35AFA0] block w-full p-2.5 " required />
+                                <input onChange={(e) => setContact({ ...contact, Email: e.target.value })}
+                                    value={contact.Email} type="email" id="email" class="bg-[#F3F4F7]  text-gray-900 text-sm rounded-sm focus:outline-[#35AFA0] block w-full p-2.5 " required />
 
                             </div>
                         </div>
                         <div className="my-3.5">
-                            <label for="first_name" class="block mb-2 text-sm font-base text-gray-900">Phone Number</label>
-                            <input type="text" id="first_name" class="bg-[#F3F4F7]  text-gray-900 text-sm rounded-sm focus:outline-[#35AFA0] block w-full p-2.5 " required />
+                            <label for="Phone_Number" class="block mb-2 text-sm font-base text-gray-900">Phone Number</label>
+                            <input onChange={(e) => setContact({ ...contact, Phone: e.target.value })}
+                                value={contact.Phone} type="text" id="Phone_Number" class="bg-[#F3F4F7]  text-gray-900 text-sm rounded-sm focus:outline-[#35AFA0] block w-full p-2.5 " required />
 
                         </div>
                         <div>
                             <label for="message" class="block mb-2 text-sm font-base text-gray-900">Your message</label>
-                            <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-[#F3F4F7] rounded-sm  focus:outline-[#35AFA0] " ></textarea>
+                            <textarea onChange={(e) => setContact({ ...contact, Message: e.target.value })}
+                                value={contact.Message} id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-[#F3F4F7] rounded-sm  focus:outline-[#35AFA0] " ></textarea>
 
                         </div>
-                        <button type="button" class="text-white w-[166px] h-[46px] bg-[#35AFA0] mt-2 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-base rounded-sm text-sm px-5 py-2.5 text-center ">Send Message</button>
+                        <button onClick={createMessage} type="button" class="text-white w-[166px] h-[46px] bg-[#35AFA0] mt-2 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-base rounded-sm text-sm px-5 py-2.5 text-center ">Send Message</button>
 
 
                     </div>
@@ -66,9 +113,7 @@ export default function ContactUs() {
             </div >
 
         </section >
-        // <section>
 
-        // </section>
 
     )
 }
