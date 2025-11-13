@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 export default function Register() {
   let [isCallingApi, setIsCallingApi] = useState(false);
 
+  let [isCallingApi, setIsCallingApi] = useState(false);
+
   let navigate = useNavigate();
 
   const initialValues = {

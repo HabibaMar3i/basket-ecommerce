@@ -1,0 +1,20 @@
+.Toastify__toast--success {
+  background-color: #35AFA0 !important;
+}
+
+.Toastify__toast--error {
+  background-color: #b91c1c !important;
+}
+
+.Toastify__progress-bar--success {
+  background: linear-gradient(to right, white, #35AFA0) !important;
+}
+
+.Toastify__progress-bar--error {
+  background: linear-gradient(to right, white, #b91c1c) !important;
+}
+
+.Toastify__toast-icon {
+  width: 24px;
+  height: 24px;
+}
