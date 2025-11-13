@@ -4,9 +4,7 @@ import { offerContext } from "../context/offerContext";
 export default function DiscountSection() {
     let { offer, loading, error } = useContext(offerContext);
 
-    console.log("🔍 DiscountSection - offer state:", offer);
-    console.log("🔍 DiscountSection - loading state:", loading);
-    console.log("🔍 DiscountSection - error state:", error);
+
 
     // Function to generate star ratings based on review count
     const renderStars = (rating) => {
