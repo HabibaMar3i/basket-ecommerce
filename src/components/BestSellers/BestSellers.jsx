@@ -13,6 +13,7 @@ export default function BestSellers() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [addingProductId, setAddingProductId] = useState(null);
     const [addedProducts, setAddedProducts] = useState(new Set()); // Track recently added products
+    const [isAnimating, setIsAnimating] = useState(false);
 
     // Function to handle product click
     const handleProductClick = async (productId) => {
@@ -105,13 +106,19 @@ export default function BestSellers() {
     const productsPerSlide = 5;
     const totalSlides = Math.ceil(sliderProducts.length / productsPerSlide);
 
-    // Slider navigation functions
+    // Smooth slider navigation functions
     const nextSlide = () => {
+        if (isAnimating) return;
+        setIsAnimating(true);
         setCurrentSlide((prev) => (prev + 1) % totalSlides);
+        setTimeout(() => setIsAnimating(false), 500);
     };
 
     const prevSlide = () => {
+        if (isAnimating) return;
+        setIsAnimating(true);
         setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
+        setTimeout(() => setIsAnimating(false), 500);
     };
 
     // Get products for current slide
@@ -238,16 +245,16 @@ export default function BestSellers() {
     const NavigationArrows = () => (
         <>
             <div
-                className="hidden lg:flex w-10 h-10 rounded-[20px] border border-[#EDEEF5] bg-[#FFFFFF] opacity-100 shadow-[0px_2px_4px_0px_#00000012] absolute top-57 -left-7 cursor-pointer items-center justify-center z-10"
+                className={`hidden lg:flex w-10 h-10 rounded-[20px] border border-[#EDEEF5] bg-[#FFFFFF] opacity-100 shadow-[0px_2px_4px_0px_#00000012] absolute top-57 -left-7 cursor-pointer items-center justify-center z-10 transition-all duration-300 hover:bg-[#FFCD00] hover:border-[#FFCD00] hover:text-white ${isAnimating ? 'pointer-events-none opacity-50' : ''}`}
                 onClick={prevSlide}
             >
-                <i className="fa-solid fa-angle-left text-4xl"></i>
+                <i className="fa-solid fa-angle-left text-2xl"></i>
             </div>
             <div
-                className="hidden lg:flex w-10 h-10 rounded-[20px] border border-[#EDEEF5] bg-[#FFFFFF] opacity-100 shadow-[0px_2px_4px_0px_#00000012] absolute top-57 -right-6 cursor-pointer items-center justify-center z-10"
+                className={`hidden lg:flex w-10 h-10 rounded-[20px] border border-[#EDEEF5] bg-[#FFFFFF] opacity-100 shadow-[0px_2px_4px_0px_#00000012] absolute top-57 -right-6 cursor-pointer items-center justify-center z-10 transition-all duration-300 hover:bg-[#FFCD00] hover:border-[#FFCD00] hover:text-white ${isAnimating ? 'pointer-events-none opacity-50' : ''}`}
                 onClick={nextSlide}
             >
-                <i className="fa-solid fa-angle-right text-4xl"></i>
+                <i className="fa-solid fa-angle-right text-2xl"></i>
             </div>
         </>
     );
@@ -290,16 +297,28 @@ export default function BestSellers() {
                     ))}
                 </div>
 
-                {/* Desktop View - Fixed Slider */}
+                {/* Desktop View - Smooth Slider */}
                 <div className="hidden lg:flex relative overflow-hidden">
-                    <div className="flex w-full justify-between">
-                        {currentProducts.map((product, index) => (
-                            <ProductCard
-                                key={`slide-${currentSlide}-${product.productId}-${index}`}
-                                product={product}
-                                index={index}
-                                isMobile={false}
-                            />
+                    <div
+                        className="flex w-full justify-between transition-all duration-500 ease-in-out"
+                        style={{
+                            transform: `translateX(-${currentSlide * 100}%)`,
+                        }}
+                    >
+                        {Array.from({ length: totalSlides }).map((_, slideIndex) => (
+                            <div key={slideIndex} className="flex w-full justify-between shrink-0">
+                                {sliderProducts.slice(
+                                    slideIndex * productsPerSlide,
+                                    slideIndex * productsPerSlide + productsPerSlide
+                                ).map((product, index) => (
+                                    <ProductCard
+                                        key={`slide-${slideIndex}-${product.productId}-${index}`}
+                                        product={product}
+                                        index={index}
+                                        isMobile={false}
+                                    />
+                                ))}
+                            </div>
                         ))}
                     </div>
                 </div>

@@ -1,10 +1,19 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { offerContext } from "../context/offerContext";
+import { GetProductByIdContext } from "../context/contexts"; // Import the context
+import ProductDetails from '../ProductDetails/ProductDetails'; // Import ProductDetails modal
+import { useDisclosure } from "@heroui/react"; // Import useDisclosure from HeroUI
 
 export default function DiscountSection() {
     let { offer, loading, error } = useContext(offerContext);
+    const { fetchProductById, productById } = useContext(GetProductByIdContext); // Get the fetch function
+    const { isOpen, onOpen, onOpenChange } = useDisclosure(); // Modal state
 
-
+    // Function to handle product click
+    const handleProductClick = async (productId) => {
+        await fetchProductById(productId); // Fetch product details
+        onOpen(); // Open modal
+    };
 
     // Function to generate star ratings based on review count
     const renderStars = (rating) => {
@@ -89,7 +98,11 @@ export default function DiscountSection() {
                     const originalPrice = getOriginalPrice(product.Price, discountPercentage);
 
                     return (
-                        <div key={product._id} className="w-full h-auto opacity-100 border border-[#EDEEF5] border-solid p-4">
+                        <div
+                            key={product._id}
+                            className="w-full h-auto opacity-100 border border-[#EDEEF5] border-solid p-4 cursor-pointer transition-transform hover:shadow-lg"
+                            onClick={() => handleProductClick(product._id)} // Add click handler
+                        >
                             <div
                                 className="w-full h-[150px] bg-[#F3F4F6] rounded-md text-[#9B9BB4] relative bg-cover bg-center"
                                 style={{ backgroundImage: `url(${product.Image.url})` }}
@@ -138,7 +151,11 @@ export default function DiscountSection() {
                         const originalPrice = getOriginalPrice(product.Price, discountPercentage);
 
                         return (
-                            <div key={product._id} className="w-full lg:w-[234px] h-auto lg:h-[374.5199890136719px] opacity-100 border border-[#EDEEF5] border-solid px-3 py-4">
+                            <div
+                                key={product._id}
+                                className="w-full lg:w-[234px] h-auto lg:h-[374.5199890136719px] opacity-100 border border-[#EDEEF5] border-solid px-3 py-4 cursor-pointer transition-transform hover:shadow-lg"
+                                onClick={() => handleProductClick(product._id)} // Add click handler
+                            >
                                 <div
                                     className="w-full lg:w-[209px] h-[150px] lg:h-[187.81px] bg-[#F3F4F6] rounded-md text-[#9B9BB4] bg-cover bg-center"
                                     style={{ backgroundImage: `url(${product.Image.url})` }}
@@ -185,7 +202,11 @@ export default function DiscountSection() {
                         const originalPrice = getOriginalPrice(product.Price, discountPercentage);
 
                         return (
-                            <div key={`${product._id}-second`} className="w-full lg:w-[234px] h-auto lg:h-[374.5199890136719px] opacity-100 border border-[#EDEEF5] border-solid px-3 py-4">
+                            <div
+                                key={`${product._id}-second`}
+                                className="w-full lg:w-[234px] h-auto lg:h-[374.5199890136719px] opacity-100 border border-[#EDEEF5] border-solid px-3 py-4 cursor-pointer transition-transform hover:shadow-lg"
+                                onClick={() => handleProductClick(product._id)} // Add click handler
+                            >
                                 <div
                                     className="w-full lg:w-[209px] h-[150px] lg:h-[187.81px] bg-[#F3F4F6] rounded-md text-[#9B9BB4] bg-cover bg-center"
                                     style={{ backgroundImage: `url(${product.Image.url})` }}
@@ -225,6 +246,15 @@ export default function DiscountSection() {
                     })}
                 </div>
             </div>
+
+            {/* Product Details Modal */}
+            {productById && (
+                <ProductDetails
+                    isOpen={isOpen}
+                    onOpenChange={onOpenChange}
+                    product={productById}
+                />
+            )}
         </section>
     );
 }
