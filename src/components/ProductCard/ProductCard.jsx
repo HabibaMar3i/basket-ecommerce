@@ -4,9 +4,9 @@ import { useCart } from "../../hooks/uesCart";
 
 export default function ProductCard({ product }) {
   const location = useLocation();
-  const { cart, addToCart, decreaseQuantity } = useCart();
+  const { addToCart, decreaseQuantity, getProductQuantityInCart } = useCart();
 
-  const cartItem = cart.find((i) => i._id === product._id);
+  const quantity = getProductQuantityInCart(product._id);
 
   return (
     <div className="cardProdcutsShop h-[380px] flex flex-col justify-between  border-[1px] border-[#EDEEF5] p-5 relative cursor-pointer">
@@ -92,14 +92,14 @@ export default function ProductCard({ product }) {
             onPress={() => {
               decreaseQuantity(product._id);
             }}
-            isDisabled={!cartItem || cartItem.quantity === 0}
+            isDisabled={quantity === 0}
           >
             {/* minus  */}
             <i className="fa-solid fa-minus"></i>
           </Button>
 
           <span className="flex-1 h-[35px] flex items-center justify-center border-y border-[#EDEEF5] text-sm">
-            {cartItem?.quantity || 0}
+            {quantity}
           </span>
 
           <Button
