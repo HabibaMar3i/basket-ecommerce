@@ -8,19 +8,22 @@ import 'flowbite/dist/flowbite.min.js'
 import TokenContextProvider from './components/context/tokenContext.jsx'
 import CategoryContextProvider from './components/context/categoryContext.jsx'
 import OfferContextProvider from './components/context/offerContext.jsx'
+import ProductContextProvider from './components/context/productContext.jsx'
 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
 
     <TokenContextProvider>
-      <OfferContextProvider>
-        <CategoryContextProvider>
-          <HeroUIProvider>
-            <App />
-          </HeroUIProvider>
-        </CategoryContextProvider>
-      </OfferContextProvider>
+      <ProductContextProvider>
+        <OfferContextProvider>
+          <CategoryContextProvider>
+            <HeroUIProvider>
+              <App />
+            </HeroUIProvider>
+          </CategoryContextProvider>
+        </OfferContextProvider>
+      </ProductContextProvider> 
     </TokenContextProvider>
 
   </StrictMode>,
