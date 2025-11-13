@@ -38,8 +38,9 @@ export default function Login() {
   async function callLogin(values) {
     try {
       setIsCallingApi(true);
+      const domain = process.env.NODE_ENV === 'production' ? '' : 'https://e-commarce-website-eight.vercel.app';
       let { data } = await axios.post(
-        "https://e-commarce-website-eight.vercel.app/api/v1/auth/login",
+        `${domain}/api/v1/auth/login`,
         values
       );
       console.log("Login successful:", data);

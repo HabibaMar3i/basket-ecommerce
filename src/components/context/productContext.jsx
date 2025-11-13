@@ -14,8 +14,9 @@ export default function ProductContextProvider({ children }) {
             setLoading(true);
             console.log("🔹 Sending request with token:", token);
 
+            const domain = process.env.NODE_ENV === 'production' ? '' : 'https://e-commarce-website-eight.vercel.app';
             const { data } = await axios.get(
-                "https://e-commarce-website-eight.vercel.app/api/v1/product/get-bestseller",
+                `${domain}/api/v1/product/get-bestseller`,
                 {
                     headers: token
                         ? { Authorization: `Bearer ${token}` }

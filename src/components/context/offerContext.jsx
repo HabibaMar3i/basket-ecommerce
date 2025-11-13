@@ -17,8 +17,9 @@ export default function OfferContextProvider({ children }) {
             setError(null);
             console.log("🔹 Sending request with token:", token);
 
+            const domain = process.env.NODE_ENV === 'production' ? '' : 'https://e-commarce-website-eight.vercel.app';
             const { data } = await axios.get(
-                "https://e-commarce-website-eight.vercel.app/api/v1/offer/top-offer",
+                `${domain}/api/v1/offer/top-offer`,
                 {
                     headers: token
                         ? { Authorization: `Bearer ${token}` }

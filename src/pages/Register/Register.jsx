@@ -41,8 +41,9 @@ export default function Register() {
   async function callRegister(values) {
     try {
       setIsCallingApi(true);
+      const domain = process.env.NODE_ENV === 'production' ? '' : 'https://e-commarce-website-eight.vercel.app';
       let { data } = await axios.post(
-        "https://e-commarce-website-eight.vercel.app/api/v1/auth/register",
+        `${domain}/api/v1/auth/register`,
         values
       );
       console.log("Registration successful:", data);

@@ -10,7 +10,7 @@ export function CategoriesProvider({ children }) {
   const { token } = useContext(tokenContext);
 
   useEffect(() => {
-    const domain = "https://e-commarce-website-eight.vercel.app";
+    const domain = process.env.NODE_ENV === 'production' ? '' : 'https://e-commarce-website-eight.vercel.app';
     const fetchCategorise = async () => {
       try {
         const res = await axios.get(`${domain}/api/v1/category/get-category`, {
