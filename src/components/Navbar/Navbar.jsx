@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Breadcrumbs from './../Breadcrumbs/Breadcrumbs';
 import { useContext } from "react";
 import { tokenContext } from "../context/tokenContext";
+import { toast } from "react-toastify";
 
 export default function NavbarComponent() {
 
@@ -13,7 +14,10 @@ export default function NavbarComponent() {
 
   function logOut() {
     localStorage.removeItem("userToken")
+    localStorage.removeItem("refreshToken")
+    localStorage.removeItem("userData")
     setToken(null)
+    toast.success("Logged out successfully!")
     navigate("/login")
   }
 
