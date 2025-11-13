@@ -6,6 +6,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { useNavigate, Link } from "react-router-dom";
 import { tokenContext } from "../../components/context/tokenContext";
 import axiosInstance from "../../axiosInstance";
+import { toast } from "react-toastify";
 
 export default function Login() {
     let [isCallingApi, setIsCallingApi] = useState(false);
@@ -47,11 +48,12 @@ export default function Login() {
             localStorage.setItem("refreshToken", data.RefreshToken);
             localStorage.setItem("userData", JSON.stringify(data.user));
             setToken(data.AccessToken);
+            toast.success("Login successful!");
             navigate("/");
         } catch (error) {
             console.error("Login error:", error.response?.data);
+            toast.error(error.response?.data?.message || "Login failed. Please try again.");
             setIsCallingApi(false);
-
         }
 
     }

@@ -9,8 +9,11 @@ import HomePage from './pages/HomePage/HomePage';
 import Blog from './pages/Blog/Blog';
 import AboutUs from './pages/AboutUs/AboutUs';
 import Cart from './pages/Cart/Cart';
+import Checkout from './pages/Checkout/Checkout';
 import ContactUs from './pages/ContactUs/ContactUs';
 import Shop from './pages/Shop/Shop';
+import Categories from './pages/Categories/Categories';
+import Orders from './pages/Orders/Orders';
 import Profile from './pages/Profile/Profile';
 import NotFound from './pages/NotFound/NotFound';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -29,8 +32,11 @@ function App() {
         { path: 'about-us', element: <AboutUs /> },
         { path: 'blog', element: <Blog /> },
         { path: 'cart', element: <Cart /> },
+        { path: 'checkout', element: <Checkout /> },
         { path: 'contact-us', element: <ContactUs /> },
         { path: 'shop', element: <Shop /> },
+        { path: 'categories/:id', element: <Categories /> },
+        { path: 'orders', element: <Orders /> },
         { path: 'profile', element: <Profile /> }
       ]
     },

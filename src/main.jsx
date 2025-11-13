@@ -10,6 +10,8 @@ import { CategoriesProvider } from "./components/context/CategoriesProvider.jsx"
 import { ProductProvider } from "./components/context/productsProvider.jsx";
 import { GetProductByIdProvider } from "./components/context/GetProductByIdProvider.jsx";
 import CartProvider from "./components/context/CartProvider.jsx";
+import { CheckoutProvider } from "./components/context/CheckoutProvider.jsx";
+import { OrdersProvider } from "./components/context/OrdersProvider.jsx";
 import ProductContextProvider from "./components/context/productContext.jsx";
 import OfferContextProvider from "./components/context/offerContext.jsx";
 
@@ -23,7 +25,11 @@ createRoot(document.getElementById("root")).render(
               <OfferContextProvider>
                 <GetProductByIdProvider>
                   <CartProvider>
-                    <App />
+                    <CheckoutProvider>
+                      <OrdersProvider>
+                        <App />
+                      </OrdersProvider>
+                    </CheckoutProvider>
                   </CartProvider>
                 </GetProductByIdProvider>
               </OfferContextProvider>

@@ -1,9 +1,11 @@
 import { useContext } from "react";
 import { CartContext } from "../../components/context/contexts";
 import { Spinner, Button } from "@heroui/react";
+import { useNavigate } from "react-router-dom";
 
 export default function Cart() {
     const { cart, totalPrice, loading, error, removeFromCart, decreaseQuantity, addToCart, clearCart } = useContext(CartContext);
+    const navigate = useNavigate();
     
     console.log('Cart data:', cart);
     console.log('Total price:', totalPrice);
@@ -102,6 +104,7 @@ export default function Cart() {
                             color="primary"
                             className="w-full bg-[#35AFA0] hover:bg-[#2d8f82] mb-2"
                             size="lg"
+                            onClick={() => navigate('/checkout')}
                         >
                             Proceed to Checkout
                         </Button>

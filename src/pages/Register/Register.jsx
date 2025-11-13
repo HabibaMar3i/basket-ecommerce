@@ -4,6 +4,7 @@ import { useState } from "react";
 import * as Yup from "yup";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function Register() {
   let [isCallingApi, setIsCallingApi] = useState(false);
@@ -47,10 +48,12 @@ export default function Register() {
         values
       );
       console.log("Registration successful:", data);
+      toast.success("Registration successful! Please login.");
       setIsCallingApi(false);
       navigate("/login");
     } catch (error) {
       console.error("Registration error:", error.response?.data);
+      toast.error(error.response?.data?.message || "Registration failed. Please try again.");
       setIsCallingApi(false);
     }
   }

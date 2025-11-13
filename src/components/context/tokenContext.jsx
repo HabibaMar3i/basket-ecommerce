@@ -3,7 +3,7 @@ import { createContext, useState , useEffect } from "react";
 export let tokenContext = createContext();
 
 export default function TokenContextProvider(props) {
-    const [token, setToken] = useState(null)
+    const [token, setToken] = useState(localStorage.getItem('userToken'))
 
      useEffect(() => {
         const storedToken = localStorage.getItem('userToken');
