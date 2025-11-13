@@ -7,14 +7,114 @@ import {
   DrawerBody,
   useDisclosure,
   Pagination,
+  Spinner,
 } from "@heroui/react";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import FilterCategories from "./FilterCategories";
-import { Link } from "react-router-dom";
 import ProductDetails from "../../components/ProductDetails/ProductDetails";
 import ProductCard from "../../components/ProductCard/ProductCard";
+import { useProducts } from "../../hooks/useProducts";
+import { useProductById } from "../../hooks/uesGetProductId";
 
 export default function Shop() {
+  const { products, lodaing, error } = useProducts();
+  // Sort data
+  const [sort, setSort] = useState("a-z");
+
+  const handelSort = (value) => {
+    setSort(value);
+  };
+  // Filter States
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedBrands, setSelectedBrands] = useState([]);
+  const [selectedAvailability, setSelectedAvailability] = useState([]);
+  const [priceFrom, setPriceFrom] = useState("");
+  const [priceTo, setPriceTo] = useState("");
+  console.log("selected Availability", selectedAvailability);
+  console.log("selected Brands", selectedBrands);
+  console.log("selected Categories", selectedCategories);
+  // Pagination
+  const [curentPage, setCurentPage] = useState(1);
+  const productsPerPage = 8;
+
+  //  Filtered And Sorted Products
+  const filteredAndSortedProducts = useMemo(() => {
+    let filtered = [...products];
+
+    // filter by categories
+    if (selectedCategories.length > 0) {
+      filtered = filtered.filter((product) => {
+        return selectedCategories.includes(product?.CategoryId?.name);
+      });
+    }
+
+    // filter by brands
+    if (selectedBrands.length > 0) {
+      filtered = filtered.filter((product) => {
+        return selectedBrands.includes(product.Brand.Name);
+      });
+    }
+
+    // filter by availability
+    if (selectedAvailability > 0) {
+      filtered = filtered.filter((product) => {
+        return selectedAvailability.includes(product.available);
+      });
+    }
+    // filter by price range
+    if (priceFrom !== "" || priceTo !== "") {
+      filtered = filtered.filter((product) => {
+        const price = product.Price || 0;
+        const from = priceFrom !== "" ? parseFloat(priceFrom) : 0;
+        const to = priceTo !== "" ? parseFloat(priceTo) : Infinity;
+        return price >= from && price <= to;
+      });
+    }
+
+    // Sort Products
+
+    filtered.sort((a, b) => {
+      switch (sort) {
+        case "a-z":
+          return (a.Name || "").localeCompare(b.Name || "");
+        case "z-a":
+          return (b.Name || "").localeCompare(a.Name || "");
+        case "low-high":
+          return (parseFloat(a.Price) || 0) - (parseFloat(b.Price) || 0);
+        case "high-low":
+          return (parseFloat(b.Price) || 0) - (parseFloat(a.Price) || 0);
+        default:
+          return 0;
+      }
+    });
+    return filtered;
+  }, [
+    products,
+    selectedCategories,
+    selectedBrands,
+    selectedAvailability,
+    priceFrom,
+    priceTo,
+    sort,
+  ]);
+
+  // Pagination calculations
+  const startIndex = (curentPage - 1) * productsPerPage;
+  const endIndex = startIndex + productsPerPage;
+  const visibleProducts = filteredAndSortedProducts.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(
+    filteredAndSortedProducts.length / productsPerPage
+  );
+  useMemo(() => {
+    setCurentPage(1);
+  }, [
+    selectedCategories,
+    selectedBrands,
+    selectedAvailability,
+    priceFrom,
+    priceTo,
+    sort,
+  ]);
   // Drawer state
   const {
     isOpen: isDrawerOpen,
@@ -29,98 +129,10 @@ export default function Shop() {
     onOpenChange: onModalOpenChange,
   } = useDisclosure();
 
-  const [sort, setSort] = useState("a-z");
-  const handelSort = (value) => {
-    setSort(value);
-  };
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const { fetchProductById, productById } = useProductById();
 
-  const products = [
-    {
-      name: "100% Butter French Croissants",
-      image: "https://placehold.co/172x155",
-      status: "IN STOCK",
-      code: "S144",
-      originalPrice: 10,
-      salePrice: null,
-      reviews: 24,
-      stars: 4.2,
-    },
-    {
-      name: "All Natural Italian-Style Chicken Meatballs",
-      image: "https://placehold.co/172x155",
-      status: "IN STOCK",
-      code: null,
-      originalPrice: 9.35,
-      salePrice: 7.25,
-      reviews: 156,
-      stars: 4.7,
-    },
-    {
-      name: "American Cheese Singles",
-      image: "https://placehold.co/172x155",
-      status: "IN STOCK",
-      code: null,
-      originalPrice: 8.29,
-      salePrice: 3.29,
-      reviews: 89,
-      stars: 3.9,
-    },
-    {
-      name: "Angie's Boomchickapop Sweet & Salty Kettle Corn",
-      image: "https://placehold.co/172x155",
-      status: "IN STOCK",
-      code: null,
-      originalPrice: 4.29,
-      salePrice: 3.29,
-      reviews: 312,
-      stars: 4.8,
-    },
-    {
-      name: "Blue Diamond Almonds Lightly Salted",
-      image: "https://placehold.co/172x155",
-      status: "IN STOCK",
-      code: null,
-      originalPrice: 11.68,
-      salePrice: null,
-      reviews: 67,
-      stars: 4.1,
-    },
-    {
-      name: "Blueberries – 1 Pint Package",
-      image: "https://placehold.co/172x155",
-      status: "IN STOCK",
-      code: null,
-      originalPrice: 4.49,
-      salePrice: 3.99,
-      reviews: 203,
-      stars: 4.5,
-    },
-    {
-      name: "Canada Dry Ginger Ale - 2 L Bottle",
-      image: "https://placehold.co/172x155",
-      status: "IN STOCK",
-      code: null,
-      originalPrice: 6.45,
-      salePrice: 3.85,
-      reviews: 178,
-      stars: 4.3,
-    },
-    {
-      name: "Challenge Spreadable Butter",
-      image: "https://placehold.co/172x155",
-      status: "IN STOCK",
-      code: null,
-      originalPrice: 7.58,
-      salePrice: null,
-      reviews: 42,
-      stars: 4.0,
-    },
-  ];
-
-  const handleOpenModal = (e, product) => {
-    e.preventDefault();
-    setSelectedProduct(product);
+  const handleOpenModal = async (id) => {
+    await fetchProductById(id);
     onModalOpen();
   };
   return (
@@ -129,14 +141,25 @@ export default function Shop() {
         <div className=" grid grid-cols-12 gap-4 relative">
           <div className=" max-[770px]:block hidden right-0 top-[-10px] absolute">
             <Button onPress={onDrawerOpen}>
-              <i class="fa-solid fa-filter text-[#35AFA0]"></i>
+              <i className="fa-solid fa-filter text-[#35AFA0]"></i>
             </Button>
             <Drawer isOpen={isDrawerOpen} onOpenChange={onDrawerOpenChange}>
               <DrawerContent>
                 {() => (
                   <>
                     <DrawerBody>
-                      <FilterCategories />
+                      <FilterCategories
+                        selectedCategories={selectedCategories}
+                        setSelectedCategories={setSelectedCategories}
+                        selectedBrands={selectedBrands}
+                        setSelectedBrands={setSelectedBrands}
+                        selectedAvailability={selectedAvailability}
+                        setSelectedAvailability={setSelectedAvailability}
+                        priceFrom={priceFrom}
+                        setPriceFrom={setPriceFrom}
+                        priceTo={priceTo}
+                        setPriceTo={setPriceTo}
+                      />
                     </DrawerBody>
                   </>
                 )}
@@ -144,7 +167,18 @@ export default function Shop() {
             </Drawer>
           </div>
           <div className="sm:col-span-12 md:col-span-4 lg:col-span-3 max-[770px]:hidden  p-2">
-            <FilterCategories />
+            <FilterCategories
+              selectedCategories={selectedCategories}
+              setSelectedCategories={setSelectedCategories}
+              selectedBrands={selectedBrands}
+              setSelectedBrands={setSelectedBrands}
+              selectedAvailability={selectedAvailability}
+              setSelectedAvailability={setSelectedAvailability}
+              priceFrom={priceFrom}
+              setPriceFrom={setPriceFrom}
+              priceTo={priceTo}
+              setPriceTo={setPriceTo}
+            />
           </div>
 
           <div className="col-span-12 md:col-span-8 lg:col-span-9  p-2">
@@ -173,28 +207,26 @@ export default function Shop() {
             <div className="sort mt-6 h-[55px] w-full bg-[#F7F8FD] flex   items-center justify-between flex-row p-2">
               <div className="countProducts">
                 <p className="text-[#9B9BB4] font-normal text-xs">
-                  62 products
+                  {filteredAndSortedProducts.length} products
                 </p>
               </div>
               <div className="sortBy">
-                <p className="text-[#9B9BB4] font-normal text-xs">
-                  <Select
-                    key={"dsds"}
-                    className="w-[250px]  bg-transparent"
-                    classNames={{
-                      trigger: "bg-transparent shadow-none ",
-                    }}
-                    label="Sort By"
-                    labelPlacement={"outside-left"}
-                    selectedKeys={[sort]}
-                    onChange={(e) => handelSort(e.target.value)}
-                  >
-                    <SelectItem key="a-z">Alphabetically, A-Z</SelectItem>
-                    <SelectItem key="z-a">Alphabetically, Z-A</SelectItem>
-                    <SelectItem key="low-high"> Low to High</SelectItem>
-                    <SelectItem key="high-low"> High to Low</SelectItem>
-                  </Select>
-                </p>
+                <Select
+                  key={"dsds"}
+                  className="w-[250px]  bg-transparent"
+                  classNames={{
+                    trigger: "bg-transparent shadow-none ",
+                  }}
+                  label="Sort By"
+                  labelPlacement={"outside-left"}
+                  selectedKeys={[sort]}
+                  onChange={(e) => handelSort(e.target.value)}
+                >
+                  <SelectItem key="a-z">Alphabetically, A-Z</SelectItem>
+                  <SelectItem key="z-a">Alphabetically, Z-A</SelectItem>
+                  <SelectItem key="low-high"> Low to High</SelectItem>
+                  <SelectItem key="high-low"> High to Low</SelectItem>
+                </Select>
               </div>
             </div>
 
@@ -203,18 +235,38 @@ export default function Shop() {
                       */}
             <div className="allProsucts mt-10">
               <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
-                {products.map((product, i) => {
-                  return (
-                    <Link onClick={(e) => handleOpenModal(e, product)}>
-                      <ProductCard product={product} key={i} />
-                    </Link>
-                  );
-                })}
+                {lodaing ? (
+                  <div className="">
+                    {" "}
+                    <Spinner
+                      color="primary"
+                      label="Primary"
+                      labelColor="primary"
+                      size="lg"
+                    />
+                  </div>
+                ) : error ? (
+                  <p className="text-[100px]">{error}</p>
+                ) : (
+                  visibleProducts.map((product, i) => {
+                    return (
+                      <div
+                        key={i}
+                        onClick={() => {
+                          handleOpenModal(product._id);
+                        }}
+                      >
+                        <ProductCard product={product} />
+                      </div>
+                    );
+                  })
+                )}
                 {/* 
                   Show Prodcts Detlais
                 */}
+
                 <ProductDetails
-                  product={selectedProduct}
+                  product={productById}
                   onOpenChange={onModalOpenChange}
                   isOpen={isModalOpen}
                 />
@@ -229,7 +281,9 @@ export default function Shop() {
               item: "w-8 h-8 text-small rounded-none bg-transparent outline-none shadow-none",
               cursor: "text-[#fff] bg-[#35AFA0] rounded-full ",
             }}
-            total={20}
+            page={curentPage}
+            onChange={setCurentPage}
+            total={totalPages}
             dotsJump={1}
           />
         </div>
