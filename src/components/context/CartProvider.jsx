@@ -1,19 +1,41 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import axios from "axios";
 import { CartContext } from "./contexts";
+import { tokenContext } from "./tokenContext";
 
 export default function CartProvider({ children }) {
-  const [cart, setCart] = useState(() => {
-    try {
-      const stored = localStorage.getItem("cart");
-      return stored ? JSON.parse(stored) : [];
-    } catch {
-      return [];
-    }
-  });
+  const [cart, setCart] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const { token } = useContext(tokenContext);
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
+    const domain = process.env.NODE_ENV === 'production' ? '' : 'https://e-commarce-website-eight.vercel.app';
+    const fetchCart = async () => {
+      try {
+        const res = await axios.get(
+          `${domain}/api/v1/cart/get-cart`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setCart(res.data.cart?.items || []);
+        setTotalPrice(res.data.cart?.totalPrice || 0);
+      } catch (err) {
+        setError(err.response?.data?.message || "Error fetching cart");
+      } finally {
+        setLoading(false);
+      }
+    };
+    if (token) {
+      fetchCart();
+    } else {
+      setLoading(false);
+    }
+  }, [token]);
   // Add To Cart
   const addToCart = (product) => {
     setCart((prev) => {
@@ -46,7 +68,7 @@ export default function CartProvider({ children }) {
 
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, decreaseQuantity, removeFromCart }}
+      value={{ cart, totalPrice, addToCart, decreaseQuantity, removeFromCart, loading, error }}
     >
       {children}
     </CartContext.Provider>
