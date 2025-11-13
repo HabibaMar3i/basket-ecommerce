@@ -12,6 +12,7 @@ import Cart from './pages/Cart/Cart';
 import Checkout from './pages/Checkout/Checkout';
 import ContactUs from './pages/ContactUs/ContactUs';
 import Shop from './pages/Shop/Shop';
+import Categories from './pages/Categories/Categories';
 import Orders from './pages/Orders/Orders';
 import Profile from './pages/Profile/Profile';
 import NotFound from './pages/NotFound/NotFound';
@@ -34,6 +35,7 @@ function App() {
         { path: 'checkout', element: <Checkout /> },
         { path: 'contact-us', element: <ContactUs /> },
         { path: 'shop', element: <Shop /> },
+        { path: 'categories/:id', element: <Categories /> },
         { path: 'orders', element: <Orders /> },
         { path: 'profile', element: <Profile /> }
       ]
