@@ -13,18 +13,18 @@ import CartProvider from "./components/context/CartProvider.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <TokenContextProvider>
-      <CategoriesProvider>
-        <ProductProvider>
-          <GetProductByIdProvider>
-            <CartProvider>
-              <HeroUIProvider>
+    <HeroUIProvider>
+      <TokenContextProvider>
+        <CategoriesProvider>
+          <ProductProvider>
+            <GetProductByIdProvider>
+              <CartProvider>
                 <App />
-              </HeroUIProvider>
-            </CartProvider>
-          </GetProductByIdProvider>
-        </ProductProvider>
-      </CategoriesProvider>
-    </TokenContextProvider>
+              </CartProvider>
+            </GetProductByIdProvider>
+          </ProductProvider>
+        </CategoriesProvider>
+      </TokenContextProvider>
+    </HeroUIProvider>
   </StrictMode>
 );
