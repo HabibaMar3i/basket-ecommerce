@@ -30,19 +30,17 @@ export default function FilterCategories({
   }));
 
   // calc availability
-
   const availabilityCounts = products.reduce((acc, product) => {
-    const status = product.available || "Unknown";
-    acc[status] = (acc[status] || 0) + 1;
+    const status = product.available;
+    if (!acc[status]) {
+      acc[status] = { status, count: 0 };
+    }
+    acc[status].count += 1;
     return acc;
   }, {});
 
-  const availabilityArray = Object.entries(availabilityCounts).map(
-    ([status, count]) => ({
-      status,
-      count,
-    })
-  );
+  const availabilityArray = Object.values(availabilityCounts);
+
   return (
     <div>
       <div className="navShop">
@@ -80,7 +78,7 @@ export default function FilterCategories({
             onValueChange={setSelectedBrands}
           >
             {brandsArray.map((product, i) => (
-              <Checkbox key={i} value={product.name}>
+              <Checkbox key={i} value={product.brand}>
                 <div className="flex justify-between w-[200px] items-center text-[#71778E]">
                   <span className="text-sm">{product.brand}</span>
                   <span className="text-xs">({product.count})</span>
@@ -128,18 +126,15 @@ export default function FilterCategories({
             value={selectedAvailability}
             onValueChange={setSelectedAvailability}
           >
-            {availabilityArray.map((st) => {
+            {availabilityArray.map((st, i) => {
               return (
-                <Checkbox value={"inStock"}>
+                <Checkbox key={i} value={st.status}>
+                  {" "}
                   <span className="text-[#71778E] w-[200px] flex justify-between">
-                    {" "}
                     <span className="text-sm">
-                      {" "}
-                      {st.status === "InStock"
-                        ? "In Stock"
-                        : " Out of stock "}{" "}
+                      {st.status === "InStock" ? "In Stock" : "Out of stock"}
                     </span>
-                    <span className="text-xs"> ({st.count}) </span>
+                    <span className="text-xs">({st.count})</span>
                   </span>
                 </Checkbox>
               );
