@@ -18,6 +18,7 @@ import { useProductById } from "../../hooks/uesGetProductId";
 
 export default function Shop() {
   const { products, lodaing, error } = useProducts();
+  console.log(products);
   // Sort data
   const [sort, setSort] = useState("a-z");
 
@@ -30,9 +31,7 @@ export default function Shop() {
   const [selectedAvailability, setSelectedAvailability] = useState([]);
   const [priceFrom, setPriceFrom] = useState("");
   const [priceTo, setPriceTo] = useState("");
-  console.log("selected Availability", selectedAvailability);
-  console.log("selected Brands", selectedBrands);
-  console.log("selected Categories", selectedCategories);
+
   // Pagination
   const [curentPage, setCurentPage] = useState(1);
   const productsPerPage = 8;
@@ -44,7 +43,7 @@ export default function Shop() {
     // filter by categories
     if (selectedCategories.length > 0) {
       filtered = filtered.filter((product) => {
-        return selectedCategories.includes(product?.CategoryId?.name);
+        return selectedCategories.includes(product?.categoryId?.name);
       });
     }
 
@@ -56,7 +55,7 @@ export default function Shop() {
     }
 
     // filter by availability
-    if (selectedAvailability > 0) {
+    if (selectedAvailability.length > 0) {
       filtered = filtered.filter((product) => {
         return selectedAvailability.includes(product.available);
       });
