@@ -95,7 +95,7 @@ export default function ProductCard({ product }) {
             isDisabled={!cartItem || cartItem.quantity === 0}
           >
             {/* minus  */}
-            <i class="fa-solid fa-minus"></i>
+            <i className="fa-solid fa-minus"></i>
           </Button>
 
           <span className="flex-1 h-[35px] flex items-center justify-center border-y border-[#EDEEF5] text-sm">
@@ -111,7 +111,7 @@ export default function ProductCard({ product }) {
             }}
           >
             {/* plus */}
-            <i class="fa-solid fa-plus"></i>
+            <i className="fa-solid fa-plus"></i>
           </Button>
         </div>
       )}

@@ -23,7 +23,7 @@ export default function ProductDetails({ isOpen, onOpenChange, product }) {
   // const randomProducts = products.sort(() => 0.5 - Math.random()).slice(0, 10);
 
   const { cart, addToCart, decreaseQuantity } = useCart();
-  const cartItem = cart.find((i) => i._id === product._id);
+  const cartItem = cart.find((i) => i._id === product?._id);
 
   return (
     <div>

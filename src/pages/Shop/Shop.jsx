@@ -7,8 +7,9 @@ import {
   DrawerBody,
   useDisclosure,
   Pagination,
+  Spinner,
 } from "@heroui/react";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import FilterCategories from "./FilterCategories";
 import ProductDetails from "../../components/ProductDetails/ProductDetails";
 import ProductCard from "../../components/ProductCard/ProductCard";
@@ -16,19 +17,104 @@ import { useProducts } from "../../hooks/useProducts";
 import { useProductById } from "../../hooks/uesGetProductId";
 
 export default function Shop() {
-  const { products } = useProducts();
+  const { products, lodaing, error } = useProducts();
+  // Sort data
+  const [sort, setSort] = useState("a-z");
 
+  const handelSort = (value) => {
+    setSort(value);
+  };
+  // Filter States
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedBrands, setSelectedBrands] = useState([]);
+  const [selectedAvailability, setSelectedAvailability] = useState([]);
+  const [priceFrom, setPriceFrom] = useState("");
+  const [priceTo, setPriceTo] = useState("");
+  console.log("selected Availability", selectedAvailability);
+  console.log("selected Brands", selectedBrands);
+  console.log("selected Categories", selectedCategories);
   // Pagination
   const [curentPage, setCurentPage] = useState(1);
   const productsPerPage = 8;
-  // loading state
 
-  // Error state
+  //  Filtered And Sorted Products
+  const filteredAndSortedProducts = useMemo(() => {
+    let filtered = [...products];
+
+    // filter by categories
+    if (selectedCategories.length > 0) {
+      filtered = filtered.filter((product) => {
+        return selectedCategories.includes(product?.CategoryId?.name);
+      });
+    }
+
+    // filter by brands
+    if (selectedBrands.length > 0) {
+      filtered = filtered.filter((product) => {
+        return selectedBrands.includes(product.Brand.Name);
+      });
+    }
+
+    // filter by availability
+    if (selectedAvailability > 0) {
+      filtered = filtered.filter((product) => {
+        return selectedAvailability.includes(product.available);
+      });
+    }
+    // filter by price range
+    if (priceFrom !== "" || priceTo !== "") {
+      filtered = filtered.filter((product) => {
+        const price = product.Price || 0;
+        const from = priceFrom !== "" ? parseFloat(priceFrom) : 0;
+        const to = priceTo !== "" ? parseFloat(priceTo) : Infinity;
+        return price >= from && price <= to;
+      });
+    }
+
+    // Sort Products
+
+    filtered.sort((a, b) => {
+      switch (sort) {
+        case "a-z":
+          return (a.Name || "").localeCompare(b.Name || "");
+        case "z-a":
+          return (b.Name || "").localeCompare(a.Name || "");
+        case "low-high":
+          return (parseFloat(a.Price) || 0) - (parseFloat(b.Price) || 0);
+        case "high-low":
+          return (parseFloat(b.Price) || 0) - (parseFloat(a.Price) || 0);
+        default:
+          return 0;
+      }
+    });
+    return filtered;
+  }, [
+    products,
+    selectedCategories,
+    selectedBrands,
+    selectedAvailability,
+    priceFrom,
+    priceTo,
+    sort,
+  ]);
+
+  // Pagination calculations
   const startIndex = (curentPage - 1) * productsPerPage;
   const endIndex = startIndex + productsPerPage;
-  const visibleProducts = products.slice(startIndex, endIndex);
-  // total pages
-  const totalPages = Math.ceil(products.length / productsPerPage);
+  const visibleProducts = filteredAndSortedProducts.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(
+    filteredAndSortedProducts.length / productsPerPage
+  );
+  useMemo(() => {
+    setCurentPage(1);
+  }, [
+    selectedCategories,
+    selectedBrands,
+    selectedAvailability,
+    priceFrom,
+    priceTo,
+    sort,
+  ]);
   // Drawer state
   const {
     isOpen: isDrawerOpen,
@@ -43,11 +129,6 @@ export default function Shop() {
     onOpenChange: onModalOpenChange,
   } = useDisclosure();
 
-  // Sort data
-  const [sort, setSort] = useState("a-z");
-  const handelSort = (value) => {
-    setSort(value);
-  };
   const { fetchProductById, productById } = useProductById();
 
   const handleOpenModal = async (id) => {
@@ -67,7 +148,18 @@ export default function Shop() {
                 {() => (
                   <>
                     <DrawerBody>
-                      <FilterCategories />
+                      <FilterCategories
+                        selectedCategories={selectedCategories}
+                        setSelectedCategories={setSelectedCategories}
+                        selectedBrands={selectedBrands}
+                        setSelectedBrands={setSelectedBrands}
+                        selectedAvailability={selectedAvailability}
+                        setSelectedAvailability={setSelectedAvailability}
+                        priceFrom={priceFrom}
+                        setPriceFrom={setPriceFrom}
+                        priceTo={priceTo}
+                        setPriceTo={setPriceTo}
+                      />
                     </DrawerBody>
                   </>
                 )}
@@ -75,7 +167,18 @@ export default function Shop() {
             </Drawer>
           </div>
           <div className="sm:col-span-12 md:col-span-4 lg:col-span-3 max-[770px]:hidden  p-2">
-            <FilterCategories />
+            <FilterCategories
+              selectedCategories={selectedCategories}
+              setSelectedCategories={setSelectedCategories}
+              selectedBrands={selectedBrands}
+              setSelectedBrands={setSelectedBrands}
+              selectedAvailability={selectedAvailability}
+              setSelectedAvailability={setSelectedAvailability}
+              priceFrom={priceFrom}
+              setPriceFrom={setPriceFrom}
+              priceTo={priceTo}
+              setPriceTo={setPriceTo}
+            />
           </div>
 
           <div className="col-span-12 md:col-span-8 lg:col-span-9  p-2">
@@ -104,7 +207,7 @@ export default function Shop() {
             <div className="sort mt-6 h-[55px] w-full bg-[#F7F8FD] flex   items-center justify-between flex-row p-2">
               <div className="countProducts">
                 <p className="text-[#9B9BB4] font-normal text-xs">
-                  {products.length} products
+                  {filteredAndSortedProducts.length} products
                 </p>
               </div>
               <div className="sortBy">
@@ -132,18 +235,32 @@ export default function Shop() {
                       */}
             <div className="allProsucts mt-10">
               <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
-                {visibleProducts.map((product, i) => {
-                  return (
-                    <div
-                      key={i}
-                      onClick={() => {
-                        handleOpenModal(product._id);
-                      }}
-                    >
-                      <ProductCard product={product} />
-                    </div>
-                  );
-                })}
+                {lodaing ? (
+                  <div className="">
+                    {" "}
+                    <Spinner
+                      color="primary"
+                      label="Primary"
+                      labelColor="primary"
+                      size="lg"
+                    />
+                  </div>
+                ) : error ? (
+                  <p className="text-[100px]">{error}</p>
+                ) : (
+                  visibleProducts.map((product, i) => {
+                    return (
+                      <div
+                        key={i}
+                        onClick={() => {
+                          handleOpenModal(product._id);
+                        }}
+                      >
+                        <ProductCard product={product} />
+                      </div>
+                    );
+                  })
+                )}
                 {/* 
                   Show Prodcts Detlais
                 */}
