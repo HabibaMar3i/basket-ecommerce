@@ -112,7 +112,7 @@ export default function Checkout() {
               className="w-full bg-[#35AFA0] hover:bg-[#2d8f82] text-white mt-4"
               size="lg"
             >
-              Place Order
+              {loading ? "Processing..." : "Pay with Stripe"}
             </Button>
           </div>
         </form>

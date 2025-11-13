@@ -19,8 +19,7 @@ export const CheckoutProvider = ({ children }) => {
   const createOrder = async (orderData, onSuccess) => {
     setLoading(true);
     try {
-      console.log('Order data:', orderData);
-      const response = await fetch("https://e-commarce-website-eight.vercel.app/api/v1/order/create-order", {
+      const orderResponse = await fetch("https://e-commarce-website-eight.vercel.app/api/v1/order/create-order", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -29,18 +28,41 @@ export const CheckoutProvider = ({ children }) => {
         body: JSON.stringify(orderData)
       });
 
-      if (!response.ok) {
-        const errorData = await response.text();
-        console.error('API Error:', response.status, errorData);
-        throw new Error(`Failed to create order: ${response.status}`);
+      if (!orderResponse.ok) {
+        throw new Error(`Failed to create order: ${orderResponse.status}`);
       }
       
-      toast.success("Order placed successfully!");
-      clearCart();
-      onSuccess?.();
+      const orderResult = await orderResponse.json();
+      const orderId = orderResult.orderId || orderResult.order?._id || orderResult._id || orderResult.id;
+      
+      if (!orderId) {
+        throw new Error('No order ID returned from order creation');
+      }
+      
+      const stripeResponse = await fetch(`https://e-commarce-website-eight.vercel.app/api/v1/payment/checkout/${orderId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("userToken")}`
+        }
+      });
+      
+      if (!stripeResponse.ok) {
+        throw new Error(`Failed to create checkout: ${stripeResponse.status}`);
+      }
+      
+      const stripeData = await stripeResponse.json();
+      
+      if (stripeData.checkoutUrl || stripeData.url) {
+        const redirectUrl = stripeData.checkoutUrl || stripeData.url;
+        window.location.href = redirectUrl;
+      } else {
+        toast.success("Order placed successfully!");
+        clearCart();
+        onSuccess?.();
+      }
     } catch (error) {
-      console.error('Order creation error:', error);
-      toast.error("Failed to place order. Please try again.");
+      toast.error("Failed to process payment. Please try again.");
     } finally {
       setLoading(false);
     }
