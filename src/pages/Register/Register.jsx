@@ -1,13 +1,11 @@
 import axios from "axios";
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import * as Yup from "yup";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useNavigate } from "react-router-dom";
 
 export default function Register() {
-  let [isCallingApi, setIsCallingApi] = useState(false);
-
   let [isCallingApi, setIsCallingApi] = useState(false);
 
   let navigate = useNavigate();
