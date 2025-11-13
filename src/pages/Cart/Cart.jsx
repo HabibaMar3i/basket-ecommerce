@@ -1,9 +1,12 @@
 import { useContext } from "react";
 import { CartContext } from "../../components/context/contexts";
-import { Spinner, Button, Image } from "@heroui/react";
+import { Spinner, Button } from "@heroui/react";
 
 export default function Cart() {
-    const { cart, totalPrice, loading, error, removeFromCart, decreaseQuantity, addToCart } = useContext(CartContext);
+    const { cart, totalPrice, loading, error, removeFromCart, decreaseQuantity, addToCart, clearCart } = useContext(CartContext);
+    
+    console.log('Cart data:', cart);
+    console.log('Total price:', totalPrice);
 
     if (loading) {
         return (
@@ -41,31 +44,31 @@ export default function Cart() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2">
                     {cart.map((item) => (
-                        <div key={item.id} className="flex items-center gap-4 p-4 border-b border-gray-200">
-                            <Image
+                        <div key={item.id || item._id} className="flex items-center gap-4 p-4 border-b border-gray-200">
+                            <img
                                 src={item.Image?.url}
-                                alt={item.name}
+                                alt={item.Name || item.name || 'Product'}
                                 className="w-20 h-20 object-cover rounded"
                             />
                             
                             <div className="flex-1">
-                                <h3 className="font-semibold text-lg">{item.name}</h3>
-                                <p className="text-[#35AFA0] font-bold">${item.price}</p>
+                                <h3 className="font-semibold text-lg">{item.Name || item.name || 'No name'}</h3>
+                                <p className="text-[#35AFA0] font-bold">${item.Price || item.price || 0}</p>
                             </div>
                             
                             <div className="flex items-center gap-2">
                                 <Button
                                     size="sm"
                                     variant="bordered"
-                                    onClick={() => decreaseQuantity(item.productId)}
+                                    onClick={() => decreaseQuantity(item.productId || item._id)}
                                 >
                                     -
                                 </Button>
-                                <span className="px-3 py-1 bg-gray-100 rounded">{item.quantity}</span>
+                                <span className="px-3 py-1 bg-gray-100 rounded">{item.quantity || 0}</span>
                                 <Button
                                     size="sm"
                                     variant="bordered"
-                                    onClick={() => addToCart({ _id: item.productId, ...item })}
+                                    onClick={() => addToCart({ _id: item.productId || item._id, ...item })}
                                 >
                                     +
                                 </Button>
@@ -74,7 +77,7 @@ export default function Cart() {
                             <Button
                                 color="danger"
                                 variant="light"
-                                onClick={() => removeFromCart(item.productId)}
+                                onClick={() => removeFromCart(item.id || item._id)}
                             >
                                 Remove
                             </Button>
@@ -87,20 +90,29 @@ export default function Cart() {
                         <h2 className="text-xl font-bold mb-4">Order Summary</h2>
                         <div className="space-y-2 mb-4">
                             <div className="flex justify-between">
-                                <span>Items ({cart.length})</span>
-                                <span>${totalPrice.toFixed(2)}</span>
+                                <span>Items ({cart?.length || 0})</span>
+                                <span>${(totalPrice || 0).toFixed(2)}</span>
                             </div>
                             <div className="flex justify-between font-bold text-lg border-t pt-2">
                                 <span>Total</span>
-                                <span className="text-[#35AFA0]">${totalPrice.toFixed(2)}</span>
+                                <span className="text-[#35AFA0]">${(totalPrice || 0).toFixed(2)}</span>
                             </div>
                         </div>
                         <Button
                             color="primary"
-                            className="w-full bg-[#35AFA0] hover:bg-[#2d8f82]"
+                            className="w-full bg-[#35AFA0] hover:bg-[#2d8f82] mb-2"
                             size="lg"
                         >
                             Proceed to Checkout
+                        </Button>
+                        <Button
+                            color="danger"
+                            variant="bordered"
+                            className="w-full"
+                            size="sm"
+                            onClick={clearCart}
+                        >
+                            Clear Cart
                         </Button>
                     </div>
                 </div>
