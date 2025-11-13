@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './App.css'
+import './refreshToken'
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import MainLayout from './layouts/MainLayout/MainLayout';
