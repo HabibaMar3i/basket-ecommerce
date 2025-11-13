@@ -4,3 +4,5 @@ export const CategoriesContext = createContext();
 export const ProductsContext = createContext();
 export const GetProductByIdContext = createContext();
 export const CartContext = createContext();
+export const CheckoutContext = createContext();
+export const OrdersContext = createContext();
