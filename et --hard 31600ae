@@ -1,0 +1,88 @@
+[33m777ab35[m[33m ([m[1;36mHEAD -> [m[1;32mahmed[m[33m, [m[1;31morigin/ahmed[m[33m)[m test
+[33m755875f[m Merge branch 'main' of https://github.com/HabibaMar3i/basket-ecommerce into ahmed
+[33m31600ae[m test filter
+[33mdc97e1f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Merge pull request #24 from HabibaMar3i/Yousefhatem
+[33mb135639[m[33m ([m[1;31morigin/Yousefhatem[m[33m)[m integrate best seller section with api
+[33mc34186c[m Merge pull request #23 from HabibaMar3i/nabil
+[33m956b219[m[33m ([m[1;31morigin/nabil[m[33m)[m add api
+[33m09914b0[m fetch all products and create a cart context , edite products detalis
+[33mbde4078[m test with eng omar
+[33m7654424[m Merge pull request #21 from HabibaMar3i/Yousefhatem
+[33m7417372[m integrate discount of home with api of top offers
+[33m6c7d2ed[m integrate category of home with api
+[33mdaf524a[m Merge pull request #20 from HabibaMar3i/Authentication
+[33mb9cbb78[m Merge branch 'main' of https://github.com/HabibaMar3i/basket-ecommerce into Authentication
+[33m19729dc[m Toastify-Added
+[33mb66dbac[m Merge pull request #19 from HabibaMar3i/habiba
+[33mc62e46a[m[33m ([m[1;31morigin/habiba[m[33m)[m fixed logo in auth layout
+[33md5fcc35[m Merge pull request #18 from HabibaMar3i/habiba
+[33m968c0df[m added auth layout with protected routes for navigation
+[33m0310fee[m fixed navbar
+[33m96c30a3[m added auth layout with simple navbar for login and register
+[33m6a10eb0[m added guards for routing
+[33mc841ac6[m Merge pull request #17 from HabibaMar3i/Authentication
+[33m77b273c[m auth-done
+[33m6e5f6ae[m Merge pull request #16 from HabibaMar3i/ahmed
+[33md67dc7f[m fix responsive slider
+[33md7aca12[m Merge pull request #15 from HabibaMar3i/ahmed
+[33m812a6f7[m completed products detalis
+[33m4071c7f[m install Swiper
+[33m8b63a63[m Merge pull request #14 from HabibaMar3i/Yousefhatem
+[33m8b98833[m home page design done
+[33mde930bf[m Merge pull request #13 from HabibaMar3i/ahmed
+[33m53b8151[m Merge branch 'main' into ahmed
+[33m068ec3f[m test
+[33mf3a2e77[m test modal in mob
+[33ma272fe6[m Merge pull request #11 from HabibaMar3i/nabil
+[33ma2cb290[m add: styles
+[33m3e04f34[m add: main photo in about page
+[33mf89e849[m Merge pull request #10 from HabibaMar3i/nabil
+[33m97ed037[m add: main photo in about page
+[33m2180f7c[m add: main photo in about page
+[33mea9707f[m Merge pull request #9 from HabibaMar3i/nabil
+[33m60503c8[m add: contact page
+[33m44f845f[m Merge pull request #8 from HabibaMar3i/ahmed
+[33mde2247c[m Merge branch 'main' of https://github.com/HabibaMar3i/basket-ecommerce into ahmed
+[33m49b3edd[m Separating prodcutCard from shopPage
+[33mcf035f2[m Merge pull request #7 from HabibaMar3i/ahmed
+[33m6670437[m test modle in shop page
+[33m78fcba0[m Merge pull request #6 from HabibaMar3i/habiba
+[33m51ecc6b[m fixed hover problem
+[33m0bb7795[m Merge pull request #5 from HabibaMar3i/Yousefhatem
+[33mf8d5846[m fix few problems in footer
+[33ma55b020[m Merge pull request #4 from HabibaMar3i/ahmed
+[33mc13e224[m fix some style and create compoent Filter
+[33m9161bff[m add: about page
+[33m0575fa3[m add: about page
+[33m98d2268[m Merge pull request #2 from HabibaMar3i/ahmed
+[33m28db7a2[m Merge pull request #3 from HabibaMar3i/Yousefhatem
+[33m04f81f2[m footer design done
+[33mdc69888[m add : finsh shop and filter
+[33m1bd220b[m Merge branch 'main' of https://github.com/HabibaMar3i/basket-ecommerce into ahmed
+[33ma3b2d17[m add: about page
+[33m8047989[m Merge pull request #1 from HabibaMar3i/nabil
+[33mbd46a87[m update: blog page (update-style)
+[33m1429b21[m add: blog page
+[33m4e21db0[m added md responsiveness
+[33m4c872da[m added profile page with its routing and hover on all
+[33m7dfe73d[m fixed breadcrumbs to be shown in other pages but not home
+[33m3c9f8e0[m added breadcrumbs for navigation
+[33m76b1702[m added main navigation
+[33mae75021[m added header component
+[33md418962[m added full top bar component
+[33m53b4cce[m added inter font and custom styles for default font
+[33m13a96e9[m added top bar component in navbar
+[33m239187c[m removed auth layout
+[33m94c8d67[m test ahmed
+[33mb951e7c[m[33m ([m[1;32mmain[m[33m)[m test ahmed
+[33meb2cf10[m fixed contact us build error
+[33md61429b[m fixed login build error
+[33m8a7d81e[m added heroUI setup
+[33m28c23d7[m added routing config using react-router-dom
+[33m18df69e[m installed axios
+[33mef84867[m added fontawesome setup
+[33m53177f8[m added tailwind setup
+[33mc6fa93d[m added pages, components, layouts and context
+[33m6090fd8[m added server config to open the website when running
+[33m0cb0538[m removed basic setup
+[33m51d0a66[m first commit

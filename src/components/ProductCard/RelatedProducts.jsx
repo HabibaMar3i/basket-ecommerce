@@ -28,11 +28,8 @@ export default function RelatedProducts({ products }) {
       >
         {products.map((product, i) => {
           return (
-            <SwiperSlide key={i}>
-              <div
-                className="relatedProducts shadow-md p-4 rounded-sm relative flex h-[335px] flex-wrap flex-col  itmes-center"
-                key={i}
-              >
+            <SwiperSlide key={product._id || i}>
+              <div className="relatedProducts shadow-md p-4 rounded-sm relative flex h-[335px] flex-wrap flex-col  itmes-center">
                 {/* 
                         sale or not
                           */}
@@ -47,7 +44,11 @@ export default function RelatedProducts({ products }) {
                           img products
                           */}
                 <div className="imgProdct flex  items-center justify-center">
-                  <img src={product.image} alt="" />
+                  <img
+                    src={product.Image.url}
+                    className="w-[200px] h-[200px]"
+                    alt=""
+                  />
                 </div>
                 {/* 
           Price
@@ -70,7 +71,7 @@ export default function RelatedProducts({ products }) {
                             text-black/70
                             "
                       >
-                        ${product.originalPrice}
+                        ${product.Price}
                       </span>
                     </div>
                   ) : (
@@ -79,7 +80,7 @@ export default function RelatedProducts({ products }) {
                             text-lg
                             text-[#000000]"
                     >
-                      ${product.originalPrice}
+                      ${product.Price}
                     </span>
                   )}
                 </div>
@@ -88,7 +89,7 @@ export default function RelatedProducts({ products }) {
         */}
                 <div className="title  my-1">
                   <p className="text-[15px] font-normal text-[#000000]">
-                    {product.name}
+                    {product.Name}
                   </p>
                 </div>
                 <div className="count">
@@ -102,7 +103,7 @@ export default function RelatedProducts({ products }) {
                     className="bg-[#35AFA0] w-[40px] h-[40px]  text-white rounded-[50%] right-[10px] top-[180px] shadow-none absolute"
                     isIconOnly
                   >
-                    {product.status === "IN STOCK" ? (
+                    {product.available === "InStock" ? (
                       <i class="fa-solid fa-plus"></i>
                     ) : (
                       <i class="fa-solid fa-eye"></i>
