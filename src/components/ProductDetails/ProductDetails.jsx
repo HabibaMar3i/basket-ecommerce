@@ -54,7 +54,7 @@ export default function ProductDetails({ isOpen, onOpenChange, product }) {
                           <Card className="w-full h-[400px] flex items-center justify-center rounded-sm shadow-none border-[1px] border-[#E7ECF0]">
                             <CardBody className="flex items-center justify-center ">
                               <Image
-                                src={product.Image.url}
+                                src={product?.Image?.url ?? ""}
                                 alt="Main Image"
                                 className="object-contain max-h-[350px]"
                                 radius="none"
@@ -72,10 +72,10 @@ export default function ProductDetails({ isOpen, onOpenChange, product }) {
 
                       <div className="">
                         <h3 className="text-2xl font-medium text-[#000000]">
-                          {product.Name}
+                          {product?.Name}
                         </h3>
                         <h3 className="text-2xl mt-5 font-medium text-[#000000]">
-                          ${product.Price}
+                          ${product?.Price}
                         </h3>
                       </div>
                       {/* 
@@ -221,7 +221,7 @@ export default function ProductDetails({ isOpen, onOpenChange, product }) {
                         </p>
                         <div className="">
                           <span className="py-1 m-0.5 px-2 rounded-sm bg-[transparent] border-[1px] border-[#E7ECF0] ">
-                            {product.categoryId.name}
+                            {product?.categoryId?.name}
                           </span>
                         </div>
                       </div>
