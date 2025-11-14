@@ -13,14 +13,19 @@ import { useProducts } from "../../hooks/useProducts";
 import { useCart } from "../../hooks/uesCart";
 
 export default function ProductDetails({ isOpen, onOpenChange, product }) {
-  // const images = [
-  //   "/src/assets/testSilder/test_3.png",
-  //   "/src/assets/testSilder/test_2.png",
-  //   "/src/assets/testSilder/test_1.png",
-  // ];
   const { products } = useProducts();
 
-  // const randomProducts = products.sort(() => 0.5 - Math.random()).slice(0, 10);
+  const getRelatedProducts = () => {
+    if (!products || !product) return [];
+
+    return products.filter(
+      (p) =>
+        p._id !== product._id && p.categoryId?.name === product.categoryId?.name
+    );
+  };
+
+  const relatedProducts = getRelatedProducts();
+  console.log(relatedProducts);
 
   const { addToCart, decreaseQuantity, getProductQuantityInCart } = useCart();
   const quantity = getProductQuantityInCart(product?._id);
@@ -241,7 +246,7 @@ export default function ProductDetails({ isOpen, onOpenChange, product }) {
                 </div>
               </ModalBody>
               <ModalFooter>
-                <RelatedProducts products={products} />
+                <RelatedProducts products={relatedProducts} />
               </ModalFooter>
             </>
           )}
