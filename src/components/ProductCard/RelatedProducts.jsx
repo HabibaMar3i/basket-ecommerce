@@ -1,13 +1,32 @@
 import React from "react";
-import { Button } from "@heroui/react";
+import { Button, useDisclosure } from "@heroui/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import { useProductById } from "../../hooks/uesGetProductId";
+import ProductDetails from "../ProductDetails/ProductDetails";
+import { useCart } from "../../hooks/uesCart";
 
 export default function RelatedProducts({ products }) {
+  const { addToCart } = useCart();
+
+  // Modal state
+  const {
+    isOpen: isModalOpen,
+    onOpen: onModalOpen,
+    onOpenChange: onModalOpenChange,
+  } = useDisclosure();
+
+  const { fetchProductById, productById } = useProductById();
+
+  const handleOpenModal = async (id) => {
+    await fetchProductById(id);
+    onModalOpen();
+  };
+
   return (
     <div className="w-full px-4 py-6">
       <h2 className="text-xl font-bold mb-4 text-start text-[#000000]">
@@ -28,7 +47,10 @@ export default function RelatedProducts({ products }) {
       >
         {products.map((product, i) => {
           return (
-            <SwiperSlide key={product._id || i}>
+            <SwiperSlide
+              key={product._id || i}
+              onClick={() => handleOpenModal(product._id)}
+            >
               <div className="relatedProducts shadow-md p-4 rounded-sm relative flex h-[335px] flex-wrap flex-col  itmes-center">
                 {/* 
                         sale or not
@@ -102,6 +124,10 @@ export default function RelatedProducts({ products }) {
                   <Button
                     className="bg-[#35AFA0] w-[40px] h-[40px]  text-white rounded-[50%] right-[10px] top-[180px] shadow-none absolute"
                     isIconOnly
+                    onPress={() => {
+                      addToCart(product);
+                    }}
+                    disabled={product.available !== "InStock"}
                   >
                     {product.available === "InStock" ? (
                       <i class="fa-solid fa-plus"></i>
@@ -114,6 +140,11 @@ export default function RelatedProducts({ products }) {
             </SwiperSlide>
           );
         })}
+        <ProductDetails
+          isOpen={isModalOpen}
+          product={productById}
+          onOpenChange={onModalOpenChange}
+        />
       </Swiper>
     </div>
   );
