@@ -1,8 +1,15 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useCategories } from '../../hooks/uesCategories';
 
 export default function Category() {
     const { categories: category } = useCategories();
+    const navigate = useNavigate();
+
+    const handleCategoryClick = (categoryName) => {
+        // Navigate to categories page with the category name as parameter
+        navigate(`/categories/${encodeURIComponent(categoryName)}`);
+    };
 
     return (
         <>
@@ -11,7 +18,10 @@ export default function Category() {
                 {category && category.length > 0 ? (
                     <>
                         {/* First big card */}
-                        <div className="w-full lg:w-[233.59px] h-[290.39px] border border-[#E4E5EE] opacity-100 rotate-0 flex flex-col items-center justify-center mb-4 lg:mb-0">
+                        <div
+                            className="w-full lg:w-[233.59px] h-[290.39px] border border-[#E4E5EE] opacity-100 rotate-0 flex flex-col items-center justify-center mb-4 lg:mb-0 cursor-pointer hover:shadow-md transition-shadow"
+                            onClick={() => handleCategoryClick(category[0]?.name)}
+                        >
                             {/* image placeholder */}
                             <div className="w-[192.59px] h-[192.59px] bg-[#F3F4F6] rounded-md flex items-center justify-center text-[#9B9BB4] text-sm overflow-hidden">
                                 {category[0]?.Image?.url ? (
@@ -39,7 +49,8 @@ export default function Category() {
                                 {category.slice(1, 5).map((cat) => (
                                     <div
                                         key={cat._id}
-                                        className="w-full lg:w-[233.59px] h-[145.19px] border-[#E4E5EE] border lg:border-r lg:border-t lg:border-b opacity-100 rotate-0 flex gap-7 px-7 py-8"
+                                        className="w-full lg:w-[233.59px] h-[145.19px] border-[#E4E5EE] border lg:border-r lg:border-t lg:border-b opacity-100 rotate-0 flex gap-7 px-7 py-8 cursor-pointer hover:shadow-md transition-shadow"
+                                        onClick={() => handleCategoryClick(cat.name)}
                                     >
                                         <div className="w-[70px] h-[70px] bg-[#F3F4F6] rounded-md flex items-center justify-center text-[#9B9BB4] text-sm overflow-hidden">
                                             {cat.Image?.url ? (
@@ -68,7 +79,8 @@ export default function Category() {
                                 {category.slice(5, 9).map((cat) => (
                                     <div
                                         key={cat._id}
-                                        className="w-full lg:w-[233.59px] h-[145.19px] border-[#E4E5EE] border lg:border-r lg:border-t lg:border-b opacity-100 rotate-0 flex gap-7 px-7 py-8"
+                                        className="w-full lg:w-[233.59px] h-[145.19px] border-[#E4E5EE] border lg:border-r lg:border-t lg:border-b opacity-100 rotate-0 flex gap-7 px-7 py-8 cursor-pointer hover:shadow-md transition-shadow"
+                                        onClick={() => handleCategoryClick(cat.name)}
                                     >
                                         <div className="w-[70px] h-[70px] bg-[#F3F4F6] rounded-md flex items-center justify-center text-[#9B9BB4] text-sm overflow-hidden">
                                             {cat.Image?.url ? (
