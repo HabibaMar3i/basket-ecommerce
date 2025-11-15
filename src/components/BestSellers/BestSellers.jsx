@@ -8,11 +8,11 @@ import { useDisclosure } from "@heroui/react";
 export default function BestSellers() {
     const { bestSeller, loading } = useContext(ProductContext);
     const { fetchProductById, productById } = useContext(GetProductByIdContext);
-    const { addToCart, cart } = useContext(CartContext); // Get cart to check if product is already added
+    const { addToCart, cart } = useContext(CartContext);
     const [currentSlide, setCurrentSlide] = useState(0);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [addingProductId, setAddingProductId] = useState(null);
-    const [addedProducts, setAddedProducts] = useState(new Set()); // Track recently added products
+    const [addedProducts, setAddedProducts] = useState(new Set());
     const [isAnimating, setIsAnimating] = useState(false);
 
     // Function to handle product click
@@ -37,10 +37,8 @@ export default function BestSellers() {
 
             addToCart(cartProduct);
 
-            // Add to recently added set for visual feedback
             setAddedProducts(prev => new Set(prev).add(product.productId));
 
-            // Remove from recently added set after 2 seconds
             setTimeout(() => {
                 setAddedProducts(prev => {
                     const newSet = new Set(prev);
@@ -56,12 +54,12 @@ export default function BestSellers() {
         }
     };
 
-    // Check if product is in cart (for persistent state)
+    // Check if product is in cart
     const isProductInCart = (productId) => {
         return cart.some(item => item._id === productId);
     };
 
-    // Check if product was recently added (for temporary visual feedback)
+    // Check if product was recently added
     const isProductRecentlyAdded = (productId) => {
         return addedProducts.has(productId);
     };
@@ -96,7 +94,7 @@ export default function BestSellers() {
         return `$${originalPrice}`;
     };
 
-    // Create duplicated products for the slider
+    // Create duplicated products for infinite scroll effect
     const getSliderProducts = () => {
         if (!bestSeller || bestSeller.length === 0) return [];
         return [...bestSeller, ...bestSeller, ...bestSeller];
@@ -121,8 +119,8 @@ export default function BestSellers() {
         setTimeout(() => setIsAnimating(false), 500);
     };
 
-    // Get products for current slide
-    const getCurrentSlideProducts = () => {
+    // Get visible products for current slide
+    const getVisibleProducts = () => {
         const startIndex = currentSlide * productsPerSlide;
         return sliderProducts.slice(startIndex, startIndex + productsPerSlide);
     };
@@ -269,7 +267,7 @@ export default function BestSellers() {
                     <div className="lg:hidden grid grid-cols-1 sm:grid-cols-2 gap-4">
                         {[1, 2, 3, 4].map(item => <LoadingSkeleton key={item} />)}
                     </div>
-                    <div className="hidden lg:flex relative">
+                    <div className="hidden lg:flex gap-4 justify-between">
                         {[1, 2, 3, 4, 5].map(item => <LoadingSkeleton key={item} />)}
                     </div>
                 </div>
@@ -277,7 +275,7 @@ export default function BestSellers() {
         );
     }
 
-    const currentProducts = getCurrentSlideProducts();
+    const visibleProducts = getVisibleProducts();
 
     return (
         <section className="mt-10">
@@ -297,28 +295,16 @@ export default function BestSellers() {
                     ))}
                 </div>
 
-                {/* Desktop View - Smooth Slider */}
-                <div className="hidden lg:flex relative overflow-hidden">
-                    <div
-                        className="flex w-full justify-between transition-all duration-500 ease-in-out"
-                        style={{
-                            transform: `translateX(-${currentSlide * 100}%)`,
-                        }}
-                    >
-                        {Array.from({ length: totalSlides }).map((_, slideIndex) => (
-                            <div key={slideIndex} className="flex w-full justify-between shrink-0">
-                                {sliderProducts.slice(
-                                    slideIndex * productsPerSlide,
-                                    slideIndex * productsPerSlide + productsPerSlide
-                                ).map((product, index) => (
-                                    <ProductCard
-                                        key={`slide-${slideIndex}-${product.productId}-${index}`}
-                                        product={product}
-                                        index={index}
-                                        isMobile={false}
-                                    />
-                                ))}
-                            </div>
+                {/* Desktop View - Fixed Slider */}
+                <div className="hidden lg:flex relative overflow-visible">
+                    <div className="flex w-full justify-between gap-4 transition-all duration-500 ease-in-out">
+                        {visibleProducts.map((product, index) => (
+                            <ProductCard
+                                key={`${product.productId}-${currentSlide}-${index}`}
+                                product={product}
+                                index={index}
+                                isMobile={false}
+                            />
                         ))}
                     </div>
                 </div>
