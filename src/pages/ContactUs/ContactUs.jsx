@@ -24,8 +24,7 @@ export default function ContactUs() {
 
                 }
             );
-            setMesssage(data.response.data.message)
-            console.log("Fetched data:", data);
+            setMesssage(data?.message)
         } catch (err) {
             const msg = err?.response?.data?.message || "Something went wrong";
 
@@ -39,7 +38,6 @@ export default function ContactUs() {
 
 
             }
-            console.error("Error fetching:", err);
 
         }
     }
