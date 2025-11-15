@@ -8,8 +8,9 @@ export async function refreshAccessToken() {
       return null;
     }
 
+    const domain = process.env.NODE_ENV === 'production' ? 'https://cors-anywhere.herokuapp.com/https://e-commarce-website-eight.vercel.app' : 'https://e-commarce-website-eight.vercel.app';
     const { data } = await axios.post(
-      "https://e-commarce-website-eight.vercel.app/api/v1/auth/refresh",
+      `${domain}/api/v1/auth/refresh`,
       { token: refreshToken },
       {
         headers: {

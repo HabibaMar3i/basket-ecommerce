@@ -12,8 +12,9 @@ export default function ContactUs() {
     async function createMessage() {
         try {
             const token = localStorage.getItem("userToken");
+            const domain = process.env.NODE_ENV === 'production' ? 'https://cors-anywhere.herokuapp.com/https://e-commarce-website-eight.vercel.app' : 'https://e-commarce-website-eight.vercel.app';
             const { data } = await axios.post(
-                "https://e-commarce-website-eight.vercel.app/api/v1/contact-us/add-ContactUs",
+                `${domain}/api/v1/contact-us/add-ContactUs`,
                 contact,
                 {
                     headers: {

@@ -39,7 +39,7 @@ export default function Login() {
     async function callLogin(values) {
         try {
             setIsCallingApi(true);
-            const domain = process.env.NODE_ENV === 'production' ? '' : 'https://e-commarce-website-eight.vercel.app';
+            const domain = process.env.NODE_ENV === 'production' ? 'https://cors-anywhere.herokuapp.com/https://e-commarce-website-eight.vercel.app' : 'https://e-commarce-website-eight.vercel.app';
             let { data } = await axiosInstance.post(`/auth/login`, values);
             console.log("Login successful:", data);
             setIsCallingApi(false);

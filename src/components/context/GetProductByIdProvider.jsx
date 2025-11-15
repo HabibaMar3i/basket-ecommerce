@@ -8,7 +8,7 @@ export function GetProductByIdProvider({ children }) {
   const [error, setError] = useState(null);
 
   const token = localStorage.getItem("userToken");
-  const domain = "https://e-commarce-website-eight.vercel.app";
+  const domain = process.env.NODE_ENV === 'production' ? 'https://cors-anywhere.herokuapp.com/https://e-commarce-website-eight.vercel.app' : 'https://e-commarce-website-eight.vercel.app';
 
   const fetchProductById = async (id) => {
     if (!id) return;

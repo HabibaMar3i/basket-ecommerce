@@ -10,7 +10,7 @@ export function ProductProvider({ children }) {
   const { token } = useContext(tokenContext);
 
   useEffect(() => {
-    const domain = process.env.NODE_ENV === 'production' ? '' : 'https://e-commarce-website-eight.vercel.app';
+    const domain = process.env.NODE_ENV === 'production' ? 'https://cors-anywhere.herokuapp.com/https://e-commarce-website-eight.vercel.app' : 'https://e-commarce-website-eight.vercel.app';
     const fetchProducts = async () => {
       try {
         const res = await axios.get(

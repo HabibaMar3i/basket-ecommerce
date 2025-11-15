@@ -18,8 +18,9 @@ export default function Blog() {
     async function getAllBlogs() {
         try {
             const token = localStorage.getItem("userToken");
+            const domain = process.env.NODE_ENV === 'production' ? 'https://cors-anywhere.herokuapp.com/https://e-commarce-website-eight.vercel.app' : 'https://e-commarce-website-eight.vercel.app';
             const { data } = await axios.get(
-                "https://e-commarce-website-eight.vercel.app/api/v1/blog/get-all-blog",
+                `${domain}/api/v1/blog/get-all-blog`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,

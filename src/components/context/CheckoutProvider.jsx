@@ -19,7 +19,7 @@ export const CheckoutProvider = ({ children }) => {
   const createOrder = async (orderData, onSuccess) => {
     setLoading(true);
     try {
-      const domain = process.env.NODE_ENV === 'production' ? '' : 'https://e-commarce-website-eight.vercel.app';
+      const domain = process.env.NODE_ENV === 'production' ? 'https://cors-anywhere.herokuapp.com/https://e-commarce-website-eight.vercel.app' : 'https://e-commarce-website-eight.vercel.app';
       const orderResponse = await fetch(`${domain}/api/v1/order/create-order`, {
         method: "POST",
         headers: {
