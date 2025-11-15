@@ -1,5 +1,7 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { tokenContext } from "../../components/context/tokenContext";
+import { toast } from "react-toastify";
 
 export default function ContactUs() {
     const [contact, setContact] = useState({
@@ -8,40 +10,32 @@ export default function ContactUs() {
         Email: "",
         Message: "",
     });
-    const [message, setMesssage] = useState("")
+    const { token } = useContext(tokenContext);
+    
     async function createMessage() {
         try {
-            const token = localStorage.getItem("userToken");
             const domain = 'https://e-commarce-website-eight.vercel.app';
             const { data } = await axios.post(
                 `${domain}/api/v1/contact-us/add-ContactUs`,
                 contact,
                 {
                     headers: {
-                        "Content-Type": "application/json",
-
                         Authorization: `Bearer ${token}`,
                     },
-
                 }
             );
-            setMesssage(data.response.data.message)
-            console.log("Fetched data:", data);
+            toast.success("Message sent successfully!");
+            setContact({ Name: "", Phone: "", Email: "", Message: "" });
         } catch (err) {
             const msg = err?.response?.data?.message || "Something went wrong";
-
-            if (msg.includes("Phone_1 dup key"))
-                setMesssage("phone is exist")
-            else if (msg.includes("Email_1 dup key")) {
-                setMesssage("email is exist")
-
+            
+            if (msg.includes("Phone_1 dup key")) {
+                toast.error("This phone number is already registered");
+            } else if (msg.includes("Email_1 dup key")) {
+                toast.error("This email is already registered");
             } else {
-                setMesssage(typeof msg === "string" ? msg : JSON.stringify(msg));
-
-
+                toast.error(msg);
             }
-            console.error("Error fetching:", err);
-
         }
     }
     return (
@@ -77,7 +71,6 @@ export default function ContactUs() {
                         offices.
                     </p>
                     <hr className="my-14  text-[#EDEEF5]" />
-                    <h4 className="text-lg mb-4 capitalize">{message}</h4>
                     <div className="group">
                         <div className="flex max-sm:flex-col w-full gap-5">
                             <div className="sm:w-1/2">
