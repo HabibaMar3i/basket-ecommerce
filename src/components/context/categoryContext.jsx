@@ -12,7 +12,7 @@ export default function CategoryContextProvider({ children }) {
         try {
             console.log("🔹 Sending request with token:", token);
 
-            const domain = process.env.NODE_ENV === 'production' ? 'https://cors-anywhere.herokuapp.com/https://e-commarce-website-eight.vercel.app' : 'https://e-commarce-website-eight.vercel.app';
+            const domain = 'https://e-commarce-website-eight.vercel.app';
             const { data } = await axios.get(
                 `${domain}/api/v1/category/get-category`,
                 {

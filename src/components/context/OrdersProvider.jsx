@@ -22,7 +22,7 @@ export const OrdersProvider = ({ children }) => {
       const userId = userData.id;
       console.log('User ID:', userId);
       
-      const domain = process.env.NODE_ENV === 'production' ? 'https://cors-anywhere.herokuapp.com/https://e-commarce-website-eight.vercel.app' : 'https://e-commarce-website-eight.vercel.app';
+      const domain = 'https://e-commarce-website-eight.vercel.app';
       const response = await fetch(`${domain}/api/v1/order/get-user-orders/${userId}`, {
         headers: {
           "Authorization": `Bearer ${localStorage.getItem("userToken")}`

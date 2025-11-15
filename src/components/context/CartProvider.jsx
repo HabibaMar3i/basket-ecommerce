@@ -12,7 +12,7 @@ export default function CartProvider({ children }) {
   const { token } = useContext(tokenContext);
 
   const refreshCart = async () => {
-    const domain = process.env.NODE_ENV === 'production' ? 'https://cors-anywhere.herokuapp.com/https://e-commarce-website-eight.vercel.app' : 'https://e-commarce-website-eight.vercel.app';
+    const domain = 'https://e-commarce-website-eight.vercel.app';
     try {
       const res = await axios.get(
         `${domain}/api/v1/cart/get-cart`,
@@ -40,7 +40,7 @@ export default function CartProvider({ children }) {
   }, [token]);
   // Add To Cart
   const addToCart = async (product) => {
-    const domain = process.env.NODE_ENV === 'production' ? 'https://cors-anywhere.herokuapp.com/https://e-commarce-website-eight.vercel.app' : 'https://e-commarce-website-eight.vercel.app';
+    const domain = 'https://e-commarce-website-eight.vercel.app';
     try {
       const userData = JSON.parse(localStorage.getItem('userData') || '{}');
       const userId = userData.id;
@@ -74,7 +74,7 @@ export default function CartProvider({ children }) {
       return;
     }
     
-    const domain = process.env.NODE_ENV === 'production' ? 'https://cors-anywhere.herokuapp.com/https://e-commarce-website-eight.vercel.app' : 'https://e-commarce-website-eight.vercel.app';
+    const domain = 'https://e-commarce-website-eight.vercel.app';
     try {
       const userData = JSON.parse(localStorage.getItem('userData') || '{}');
       const userId = userData.id;
@@ -102,7 +102,7 @@ export default function CartProvider({ children }) {
   };
   // Remove From Cart
   const removeFromCart = async (productId) => {
-    const domain = process.env.NODE_ENV === 'production' ? 'https://cors-anywhere.herokuapp.com/https://e-commarce-website-eight.vercel.app' : 'https://e-commarce-website-eight.vercel.app';
+    const domain = 'https://e-commarce-website-eight.vercel.app';
     try {
       await axios.delete(
         `${domain}/api/v1/cart/remove/${productId}`,
@@ -123,7 +123,7 @@ export default function CartProvider({ children }) {
 
   // Clear Cart
   const clearCart = async () => {
-    const domain = process.env.NODE_ENV === 'production' ? 'https://cors-anywhere.herokuapp.com/https://e-commarce-website-eight.vercel.app' : 'https://e-commarce-website-eight.vercel.app';
+    const domain = 'https://e-commarce-website-eight.vercel.app';
     try {
       await axios.delete(
         `${domain}/api/v1/cart/clear-Cart`,

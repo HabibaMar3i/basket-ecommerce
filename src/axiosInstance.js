@@ -1,7 +1,7 @@
 import axios from "axios";
 import { refreshAccessToken } from "./refreshToken";
 
-const domain = import.meta.env.MODE === 'production' ? 'https://cors-anywhere.herokuapp.com/https://e-commarce-website-eight.vercel.app' : 'https://e-commarce-website-eight.vercel.app';
+const domain = 'https://e-commarce-website-eight.vercel.app';
 
 const axiosInstance = axios.create({
   baseURL: `${domain}/api/v1`,
