@@ -11,10 +11,17 @@ import {
 import RelatedProducts from "../ProductCard/RelatedProducts";
 import { useProducts } from "../../hooks/useProducts";
 import { useCart } from "../../hooks/uesCart";
+import { useWishlist } from "../../hooks/uesWishlist";
+import { useEffect } from "react";
 
 export default function ProductDetails({ isOpen, onOpenChange, product }) {
   const { products } = useProducts();
-
+  const { addToWishlist, getWishlist, wishlist } = useWishlist();
+  //
+  useEffect(() => {
+    getWishlist();
+  }, []);
+  //
   const getRelatedProducts = () => {
     if (!products || !product) return [];
 
@@ -29,7 +36,8 @@ export default function ProductDetails({ isOpen, onOpenChange, product }) {
 
   const { addToCart, decreaseQuantity, getProductQuantityInCart } = useCart();
   const quantity = getProductQuantityInCart(product?._id);
-
+  // test
+  console.log(wishlist);
   return (
     <div>
       <Modal
@@ -179,7 +187,10 @@ export default function ProductDetails({ isOpen, onOpenChange, product }) {
                       Wishlist & Share
                       */}
                       <div className="flex gap-3 my-3">
-                        <Button className=" w-50 rounded-sm bg-[transparent] border-[1px] border-[#E7ECF0]">
+                        <Button
+                          className=" w-50 rounded-sm bg-[transparent] border-[1px] border-[#E7ECF0]"
+                          onPress={() => addToWishlist(product._id)}
+                        >
                           <i class="fa-regular fa-heart"></i>
                           Add to Wishlist
                         </Button>
