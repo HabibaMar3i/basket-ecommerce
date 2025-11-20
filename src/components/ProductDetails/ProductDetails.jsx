@@ -16,11 +16,17 @@ import { useEffect } from "react";
 
 export default function ProductDetails({ isOpen, onOpenChange, product }) {
   const { products } = useProducts();
-  const { addToWishlist, getWishlist, wishlist } = useWishlist();
+  const { addToWishlist, getWishlist, removeWishlist, wishlist, loading } =
+    useWishlist();
   //
   useEffect(() => {
     getWishlist();
   }, []);
+
+  const findWishlist = (productId) => {
+    return wishlist.some((p) => p._id === productId);
+  };
+
   //
   const getRelatedProducts = () => {
     if (!products || !product) return [];
@@ -32,7 +38,6 @@ export default function ProductDetails({ isOpen, onOpenChange, product }) {
   };
 
   const relatedProducts = getRelatedProducts();
-  console.log(relatedProducts);
 
   const { addToCart, decreaseQuantity, getProductQuantityInCart } = useCart();
   const quantity = getProductQuantityInCart(product?._id);
@@ -189,10 +194,25 @@ export default function ProductDetails({ isOpen, onOpenChange, product }) {
                       <div className="flex gap-3 my-3">
                         <Button
                           className=" w-50 rounded-sm bg-[transparent] border-[1px] border-[#E7ECF0]"
-                          onPress={() => addToWishlist(product._id)}
+                          onPress={
+                            findWishlist(product._id)
+                              ? () => removeWishlist(product._id)
+                              : () => addToWishlist(product._id)
+                          }
+                          isLoading={loading}
                         >
-                          <i class="fa-regular fa-heart"></i>
-                          Add to Wishlist
+                          {" "}
+                          {findWishlist(product._id) ? (
+                            <div className="flex gap-2 items-center">
+                              <i class="fa-solid fa-heart "></i>
+                              <span> Remove Wishlist</span>
+                            </div>
+                          ) : (
+                            <div className="">
+                              <i class="fa-regular fa-heart"></i>
+                              Add to Wishlist
+                            </div>
+                          )}
                         </Button>
                         <Button className="w-50 rounded-sm bg-[transparent] border-[1px] border-[#E7ECF0]">
                           <i class="fa-solid fa-share"></i>
